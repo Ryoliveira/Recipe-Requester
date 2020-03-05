@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Pairing Display</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <th><p th:text="${pairing.getWineName()}"></p></th>
+    </thead>
+    <tr th:each="dish : ${pairing.getPairings()}">
+        <td th:text="${dish}"></td>
+    </tr>
+    <tr>
+        <td th:text="${pairing.getText()}"></td>
+    </tr>
+
+</table>
+
+</body>
+</html>
