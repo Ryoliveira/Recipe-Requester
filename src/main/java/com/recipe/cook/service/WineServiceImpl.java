@@ -1,13 +1,16 @@
 package com.recipe.cook.service;
 
-import com.recipe.cook.model.DishPairing;
-import com.recipe.cook.model.WinePairing;
+import com.recipe.cook.entity.DishPairing;
+import com.recipe.cook.entity.WineRecommendation;
+import com.recipe.cook.entity.WineDescription;
+import com.recipe.cook.entity.WinePairing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,47 +23,49 @@ public class WineServiceImpl implements WineService {
 
     final Logger LOGGER = LoggerFactory.getLogger(WineServiceImpl.class);
 
-    @Autowired
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
-    @Value("${WineDish.url}")
-    String dishPairUrl;
-
-    @Value("${WinePair.url}")
-    String winePairUrl;
+    @Value("${Wine.url}")
+    private String wineUrl;
 
     @Value("${spoon.key}")
-    String key;
+    private String key;
+
+    @Autowired
+    public WineServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
 
     @Override
     public DishPairing getDishPairing(String wineName) {
-        //todo handle when a wine name is not recognized
-        DishPairing pairingResult = new DishPairing();
-        String encodedName = "";
+        DishPairing pairingResult;
+        String encodedName = null;
+        ResponseEntity<DishPairing> response;
         try {
-            encodedName = URLEncoder
-                    .encode(wineName, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+            encodedName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
-        String url = UriComponentsBuilder.fromHttpUrl(dishPairUrl)
-                .queryParam("apiKey", key)
-                .queryParam("wine", encodedName).toUriString();
+            String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/dishes")
+                    .queryParam("apiKey", key)
+                    .queryParam("wine", encodedName).toUriString();
 
-        ResponseEntity<DishPairing> result = restTemplate.getForEntity(url, DishPairing.class);
-
-        if (result.getStatusCodeValue() == 200) {
-            pairingResult = result.getBody();
+            response = restTemplate.getForEntity(url, DishPairing.class);
+            pairingResult = response.getBody();
             pairingResult.setWineName(wineName);
+
+            LOGGER.info(pairingResult.toString());
+
+        } catch (HttpClientErrorException.BadRequest | UnsupportedEncodingException e) {
+            return null;
         }
+
         return pairingResult;
     }
 
     @Override
     public WinePairing getWinePairing(String foodName, int maxPrice) {
-        WinePairing winePairing = new WinePairing();
-        String encodedFoodName = "";
+        WinePairing winePairing;
+        String encodedFoodName = null;
 
         try {
             encodedFoodName = URLEncoder.encode(foodName, StandardCharsets.UTF_8.toString());
@@ -68,30 +73,74 @@ public class WineServiceImpl implements WineService {
             e.printStackTrace();
         }
 
-        String url = UriComponentsBuilder.fromHttpUrl(winePairUrl)
+        String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/pairing")
                 .queryParam("apiKey", key)
                 .queryParam("food", encodedFoodName)
                 .queryParam("maxPrice", maxPrice).toUriString();
 
 
-        ResponseEntity<WinePairing> result = restTemplate.getForEntity(url, WinePairing.class);
+        ResponseEntity<WinePairing> response = restTemplate.getForEntity(url, WinePairing.class);
+        winePairing = response.getBody();
+        winePairing.setFoodName(foodName);
 
+        LOGGER.info(winePairing.toString());
 
-        if (result.getStatusCodeValue() == 200) {
-            winePairing = result.getBody();
-            winePairing.setFoodName(foodName);
+        if (winePairing.getPairedWines() == null) {
+            return null;
+        }else {
+            return winePairing;
         }
-
-        return winePairing;
     }
 
     @Override
-    public void getWineDescription(String wineName) {
+    public WineDescription getWineDescription(String wineName) {
+        WineDescription wineDescription;
+        String encodedWineName = null;
+        ResponseEntity<WineDescription> response;
+        try {
+            encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
+            String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/description")
+                    .queryParam("apiKey", key)
+                    .queryParam("wine", encodedWineName).toUriString();
+
+            response = restTemplate.getForEntity(url, WineDescription.class);
+            wineDescription = response.getBody();
+            wineDescription.setWineName(wineName);
+
+            LOGGER.info(wineDescription.toString());
+
+        } catch (HttpClientErrorException.BadRequest | UnsupportedEncodingException e) {
+            return null;
+        }
+        return wineDescription;
     }
 
     @Override
-    public void getWineRecommendation(String wineName, int maxPrice, float minRating, int numberD) {
+    public WineRecommendation getWineRecommendation(String wineName, int maxPrice, double minRating, int number) {
+        WineRecommendation wineRecommendation;
+        String encodedWineName = null;
+        ResponseEntity<WineRecommendation> response;
 
+        try {
+            encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
+
+            String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/recommendation")
+                    .queryParam("apiKey", key)
+                    .queryParam("wine", encodedWineName)
+                    .queryParam("maxPrice", maxPrice)
+                    .queryParam("minRating", minRating)
+                    .queryParam("number", number).toUriString();
+
+            response = restTemplate.getForEntity(url, WineRecommendation.class);
+            wineRecommendation = response.getBody();
+            wineRecommendation.setWineName(wineName);
+
+            LOGGER.info(wineRecommendation.toString());
+
+        } catch (HttpClientErrorException.BadRequest | UnsupportedEncodingException e) {
+            return null;
+        }
+        return wineRecommendation;
     }
 }
