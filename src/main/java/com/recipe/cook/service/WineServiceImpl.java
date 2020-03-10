@@ -1,9 +1,9 @@
 package com.recipe.cook.service;
 
 import com.recipe.cook.entity.DishPairing;
-import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.entity.WineDescription;
 import com.recipe.cook.entity.WinePairing;
+import com.recipe.cook.entity.WineRecommendation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class WineServiceImpl implements WineService {
     @Override
     public DishPairing getDishPairing(String wineName) {
         DishPairing pairingResult;
-        String encodedName = null;
+        String encodedName;
         ResponseEntity<DishPairing> response;
         try {
             encodedName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
@@ -87,7 +87,7 @@ public class WineServiceImpl implements WineService {
 
         if (winePairing.getPairedWines() == null) {
             return null;
-        }else {
+        } else {
             return winePairing;
         }
     }
@@ -95,7 +95,7 @@ public class WineServiceImpl implements WineService {
     @Override
     public WineDescription getWineDescription(String wineName) {
         WineDescription wineDescription;
-        String encodedWineName = null;
+        String encodedWineName;
         ResponseEntity<WineDescription> response;
         try {
             encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
@@ -119,7 +119,7 @@ public class WineServiceImpl implements WineService {
     @Override
     public WineRecommendation getWineRecommendation(String wineName, int maxPrice, double minRating, int number) {
         WineRecommendation wineRecommendation;
-        String encodedWineName = null;
+        String encodedWineName;
         ResponseEntity<WineRecommendation> response;
 
         try {

@@ -1,17 +1,17 @@
 package com.recipe.cook.service;
 
 import com.recipe.cook.entity.DishPairing;
-import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.entity.WineDescription;
 import com.recipe.cook.entity.WinePairing;
+import com.recipe.cook.entity.WineRecommendation;
 
 public interface WineService {
-    public DishPairing getDishPairing(String wineName);
+    DishPairing getDishPairing(String wineName);
 
-    public WinePairing getWinePairing(String foodName, int maxPrice);
+    WinePairing getWinePairing(String foodName, int maxPrice);
 
-    public WineDescription getWineDescription(String wineName);
+    WineDescription getWineDescription(String wineName);
 
-    public WineRecommendation getWineRecommendation(String wineName, int maxPrice, double minRating, int number);
+    WineRecommendation getWineRecommendation(String wineName, int maxPrice, double minRating, int number);
 
 }

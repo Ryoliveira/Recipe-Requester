@@ -1,9 +1,9 @@
 package com.recipe.cook;
 
 import com.recipe.cook.entity.DishPairing;
-import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.entity.WineDescription;
 import com.recipe.cook.entity.WinePairing;
+import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.service.WineServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +36,7 @@ public class WineServiceTest {
     private String dummyUrl = "https://api.spoonacular.com";
 
     @Test
-    public void getDishPairing_Found(){
+    public void getDishPairing_Found() {
         DishPairing dishPairing = new DishPairing();
         ReflectionTestUtils.setField(wineService, "dishPairUrl", dummyUrl);
 
@@ -47,7 +47,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getDishPairing_NotFound(){
+    public void getDishPairing_NotFound() {
         ReflectionTestUtils.setField(wineService, "dishPairUrl", dummyUrl);
 
         when(restTemplate.getForEntity(anyString(), eq(DishPairing.class))).thenThrow(HttpClientErrorException.BadRequest.class);
@@ -58,7 +58,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getWinePairing_Found(){
+    public void getWinePairing_Found() {
         List<String> dummyWines = Arrays.asList("merlot", "riesling");
         WinePairing winePairing = mock(WinePairing.class);
         winePairing.setPairedWines(dummyWines);
@@ -72,7 +72,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getWinePairing_NotFound(){
+    public void getWinePairing_NotFound() {
         WinePairing winePairing = new WinePairing();
         ReflectionTestUtils.setField(wineService, "winePairUrl", dummyUrl);
 
@@ -84,7 +84,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getWineDescription_Found(){
+    public void getWineDescription_Found() {
         WineDescription wineDescription = mock(WineDescription.class);
         ReflectionTestUtils.setField(wineService, "wineDescUrl", dummyUrl);
 
@@ -96,7 +96,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getWineDescription_NotFound(){
+    public void getWineDescription_NotFound() {
         ReflectionTestUtils.setField(wineService, "wineDescUrl", dummyUrl);
 
         when(restTemplate.getForEntity(anyString(), eq(WineDescription.class))).thenThrow(HttpClientErrorException.BadRequest.class);
@@ -106,7 +106,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getWineRecommendation_Found(){
+    public void getWineRecommendation_Found() {
         WineRecommendation wineRecommendation = new WineRecommendation();
         ReflectionTestUtils.setField(wineService, "wineRecoUrl", dummyUrl);
 
@@ -118,7 +118,7 @@ public class WineServiceTest {
     }
 
     @Test
-    public void getWineRecommendation_NotFound(){
+    public void getWineRecommendation_NotFound() {
         ReflectionTestUtils.setField(wineService, "wineRecoUrl", dummyUrl);
 
         when(restTemplate.getForEntity(anyString(), eq(WineRecommendation.class))).thenThrow(HttpClientErrorException.BadRequest.class);
@@ -126,7 +126,6 @@ public class WineServiceTest {
         assertNull(wineService.getWineRecommendation("wineName", 1, 1.0, 1));
         verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WineRecommendation.class));
     }
-
 
 
 }

@@ -1,9 +1,9 @@
 package com.recipe.cook.controller;
 
 import com.recipe.cook.entity.DishPairing;
-import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.entity.WineDescription;
 import com.recipe.cook.entity.WinePairing;
+import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.service.WineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +35,15 @@ public class WineController {
         return "wine/wine-home";
     }
 
-    @GetMapping("/dishes")
-    public String getDishPairing(@RequestParam("wineName") String wineName,
-                                 Model theModel, RedirectAttributes redirectAttr) {
+    @GetMapping("/dishes/search")
+    public String getDishPairingPage(Model theModel) {
+        theModel.addAttribute("dishPairingSearch", true);
+        return "wine/wine-home";
+    }
+
+    @GetMapping("/dishes/results")
+    public String getDishPairingResults(@RequestParam("wineName") String wineName,
+                                        Model theModel, RedirectAttributes redirectAttr) {
         DishPairing dishPairing;
 
         if ((dishPairing = wineService.getDishPairing(wineName)) != null) {
@@ -45,16 +51,22 @@ public class WineController {
         } else {
             String msg = new StringBuilder("No pairings found for ").append(wineName).toString();
             redirectAttr.addFlashAttribute("noDishPairingFound", msg);
-            return "redirect:/wine/wine-home";
+            return "redirect:/wine/dishes/search";
         }
 
         return "wine/wine-display";
     }
 
-    @GetMapping("/pairing")
-    public String getWinePairing(@RequestParam("foodName") String foodName,
-                                 @RequestParam("maxPrice") int maxPrice,
-                                 Model theModel, RedirectAttributes redirectAttr) {
+    @GetMapping("/pairing/search")
+    public String getWinePairingPage(Model theModel) {
+        theModel.addAttribute("winePairingSearch", true);
+        return "wine/wine-home";
+    }
+
+    @GetMapping("/pairing/results")
+    public String getWinePairingResults(@RequestParam("foodName") String foodName,
+                                        @RequestParam("maxPrice") int maxPrice,
+                                        Model theModel, RedirectAttributes redirectAttr) {
         WinePairing winePairing;
 
         if ((winePairing = wineService.getWinePairing(foodName, maxPrice)) != null) {
@@ -62,7 +74,7 @@ public class WineController {
         } else {
             String msg = new StringBuilder("No pairings found for ").append(foodName).toString();
             redirectAttr.addFlashAttribute("noWinePairingFound", msg);
-            return "redirect:/wine/wine-home";
+            return "redirect:/wine/pairing/search";
         }
 
         LOGGER.info(winePairing.toString());
@@ -70,8 +82,13 @@ public class WineController {
         return "wine/wine-display";
     }
 
+    @GetMapping("/recommendations/search")
+    public String getWineRecommentaionsPage(Model theModel) {
+        theModel.addAttribute("wineRecommendationSearch", true);
+        return "wine/wine-home";
+    }
 
-    @GetMapping("/recommendations")
+    @GetMapping("/recommendations/results")
     public String getWineRecommentaions(@RequestParam("wineName") String wineName,
                                         @RequestParam("maxPrice") int maxPrice,
                                         @RequestParam("minRating") double minRating,
@@ -84,16 +101,23 @@ public class WineController {
         } else {
             String msg = new StringBuilder(wineName).append(" not found.").toString();
             redirectAttr.addFlashAttribute("noRecommendationFound", msg);
-            return "redirect:/wine/wine-home";
+            return "redirect:/wine/recommendations/search";
         }
 
 
         return "wine/wine-display";
     }
 
-    @GetMapping("/description")
-    public String getWineDescription(@RequestParam("wineName") String wineName,
-                                     Model theModel, RedirectAttributes redirectAttr) {
+    @GetMapping("/description/search")
+    public String getWineDescriptionPage(Model theModel) {
+        theModel.addAttribute("wineDescriptionSearch", true);
+        return "wine/wine-home";
+
+    }
+
+    @GetMapping("/description/result")
+    public String getWineDescriptionResult(@RequestParam("wineName") String wineName,
+                                           Model theModel, RedirectAttributes redirectAttr) {
         WineDescription wineDescription;
 
         if ((wineDescription = wineService.getWineDescription(wineName)) != null) {
@@ -101,7 +125,7 @@ public class WineController {
         } else {
             String msg = new StringBuilder(wineName).append(" not found.").toString();
             redirectAttr.addFlashAttribute("noDescFound", msg);
-            return "redirect:/wine/wine-home";
+            return "redirect:/wine/description/search";
         }
 
         return "wine/wine-display";

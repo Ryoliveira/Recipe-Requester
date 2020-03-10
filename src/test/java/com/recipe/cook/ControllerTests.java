@@ -4,9 +4,9 @@ package com.recipe.cook;
 import com.recipe.cook.controller.MainController;
 import com.recipe.cook.controller.WineController;
 import com.recipe.cook.entity.DishPairing;
-import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.entity.WineDescription;
 import com.recipe.cook.entity.WinePairing;
+import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.service.WineServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -169,7 +169,7 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWineDescription_Found() throws Exception{
+    public void getWineDescription_Found() throws Exception {
         WineDescription wineDescription = mock(WineDescription.class);
 
         when(wineService.getWineDescription(anyString())).thenReturn(wineDescription);
@@ -186,7 +186,7 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWineDescription_NotFound_Redirect() throws Exception{
+    public void getWineDescription_NotFound_Redirect() throws Exception {
         when(wineService.getWineDescription(anyString())).thenReturn(null);
 
         wineMvc.perform(get("/wine/description")
