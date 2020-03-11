@@ -1,5 +1,6 @@
+
 .center {
-          margin: auto;
+          margin: 0 auto;
           width: 60%;
           border: 3px solid #007bff;
           padding: 10px;
@@ -9,7 +10,6 @@
 
 .wine-display-bg{
         background-color: #7790ba
-
 }
 
 .wine-display-text{
@@ -18,12 +18,6 @@
 
 .wine-bg{
         background-image: url(/images/wine/Wine-Cellar.jpg);
-
-        /* Full height */
-        height: 150%;
-
-        /* Center and scale the image nicely */
-        background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
 }

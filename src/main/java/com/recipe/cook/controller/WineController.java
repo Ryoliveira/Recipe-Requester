@@ -36,7 +36,7 @@ public class WineController {
     }
 
     @GetMapping("/dishes/search")
-    public String getDishPairingPage(Model theModel) {
+    public String getDishPairingSearchPage(Model theModel) {
         theModel.addAttribute("dishPairingSearch", true);
         return "wine/wine-home";
     }
@@ -58,7 +58,7 @@ public class WineController {
     }
 
     @GetMapping("/pairing/search")
-    public String getWinePairingPage(Model theModel) {
+    public String getWinePairingSearchPage(Model theModel) {
         theModel.addAttribute("winePairingSearch", true);
         return "wine/wine-home";
     }
@@ -83,13 +83,13 @@ public class WineController {
     }
 
     @GetMapping("/recommendations/search")
-    public String getWineRecommentaionsPage(Model theModel) {
+    public String getWineRecommendationsSearchPage(Model theModel) {
         theModel.addAttribute("wineRecommendationSearch", true);
         return "wine/wine-home";
     }
 
     @GetMapping("/recommendations/results")
-    public String getWineRecommentaions(@RequestParam("wineName") String wineName,
+    public String getWineRecommendationsResults(@RequestParam("wineName") String wineName,
                                         @RequestParam("maxPrice") int maxPrice,
                                         @RequestParam("minRating") double minRating,
                                         @RequestParam("number") int number,
@@ -109,7 +109,7 @@ public class WineController {
     }
 
     @GetMapping("/description/search")
-    public String getWineDescriptionPage(Model theModel) {
+    public String getWineDescriptionSearchPage(Model theModel) {
         theModel.addAttribute("wineDescriptionSearch", true);
         return "wine/wine-home";
 

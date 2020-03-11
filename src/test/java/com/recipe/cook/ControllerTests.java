@@ -32,7 +32,6 @@ public class ControllerTests {
     @Mock
     WineServiceImpl wineService;
 
-
     @Before
     public void setUp() {
         final MainController mainController = new MainController();
@@ -66,11 +65,21 @@ public class ControllerTests {
     }
 
     @Test
-    public void getDishPairing_Found() throws Exception {
+    public void getDishPairingSearchPage() throws Exception {
+        wineMvc.perform(get("/wine/dishes/search"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("dishPairingSearch", true))
+                .andExpect(view().name("wine/wine-home"))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
+    public void getDishPairingResults_Found() throws Exception {
         DishPairing pairingMock = mock(DishPairing.class);
         when(wineService.getDishPairing(anyString())).thenReturn(pairingMock);
 
-        wineMvc.perform(get("/wine/dishes")
+        wineMvc.perform(get("/wine/dishes/results")
                 .param("wineName", anyString()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("pairing", pairingMock))
@@ -82,15 +91,15 @@ public class ControllerTests {
     }
 
     @Test
-    public void getDishPairing_NotFound_Redirect() throws Exception {
+    public void getDishPairingResults_NotFound_Redirect() throws Exception {
         when(wineService.getDishPairing(anyString())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/dishes")
+        wineMvc.perform(get("/wine/dishes/results")
                 .param("wineName", anyString()))
                 .andExpect(status().isFound())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("noDishPairingFound", "No pairings found for "))
-                .andExpect(view().name("redirect:/wine/wine-home"))
+                .andExpect(view().name("redirect:/wine/dishes/search"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 
@@ -98,11 +107,21 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWinePairing_Found() throws Exception {
+    public void getWinePairingSearchPage() throws Exception {
+        wineMvc.perform(get("/wine/pairing/search"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("winePairingSearch", true))
+                .andExpect(view().name("wine/wine-home"))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+    @Test
+    public void getWinePairingResults_Found() throws Exception {
         WinePairing winePairing = mock(WinePairing.class);
         when(wineService.getWinePairing(anyString(), anyInt())).thenReturn(winePairing);
 
-        wineMvc.perform(get("/wine/pairing")
+        wineMvc.perform(get("/wine/pairing/results")
                 .param("foodName", anyString())
                 .param("maxPrice", String.valueOf(anyInt())))
                 .andExpect(status().isOk())
@@ -116,15 +135,15 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWinePairing_NotFound_Redirect() throws Exception {
+    public void getWinePairingResults_NotFound_Redirect() throws Exception {
         when(wineService.getWinePairing(anyString(), anyInt())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/pairing")
+        wineMvc.perform(get("/wine/pairing/results")
                 .param("foodName", anyString())
                 .param("maxPrice", String.valueOf(anyInt())))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("noWinePairingFound", "No pairings found for "))
-                .andExpect(view().name("redirect:/wine/wine-home"))
+                .andExpect(view().name("redirect:/wine/pairing/search"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 
@@ -132,11 +151,22 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWineRecommentaions_Found() throws Exception {
+    public void getWineRecommendationsSearchPage() throws Exception {
+        wineMvc.perform(get("/wine/recommendations/search"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("wineRecommendationSearch", true))
+                .andExpect(view().name("wine/wine-home"))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
+
+    @Test
+    public void getWineRecommendationsResults_Found() throws Exception {
         WineRecommendation wineRecommendation = mock(WineRecommendation.class);
         when(wineService.getWineRecommendation(anyString(), anyInt(), anyDouble(), anyInt())).thenReturn(wineRecommendation);
 
-        wineMvc.perform(get("/wine/recommendations")
+        wineMvc.perform(get("/wine/recommendations/results")
                 .param("wineName", anyString())
                 .param("maxPrice", String.valueOf(anyInt()))
                 .param("minRating", String.valueOf(anyDouble()))
@@ -151,17 +181,17 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWineRecommentaions_NotFound_Redirect() throws Exception {
+    public void getWineRecommendationsResults_NotFound_Redirect() throws Exception {
         when(wineService.getWineRecommendation(anyString(), anyInt(), anyDouble(), anyInt())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/recommendations")
+        wineMvc.perform(get("/wine/recommendations/results")
                 .param("wineName", anyString())
                 .param("maxPrice", String.valueOf(anyInt()))
                 .param("minRating", String.valueOf(anyDouble()))
                 .param("number", String.valueOf(anyInt())))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("noRecommendationFound", " not found."))
-                .andExpect(view().name("redirect:/wine/wine-home"))
+                .andExpect(view().name("redirect:/wine/recommendations/search"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 
@@ -169,12 +199,23 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWineDescription_Found() throws Exception {
+    public void getWineDescriptionSearchPage() throws Exception {
+        wineMvc.perform(get("/wine/description/search"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("wineDescriptionSearch", true))
+                .andExpect(view().name("wine/wine-home"))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+
+    }
+
+    @Test
+    public void getWineDescriptionResult_Found() throws Exception {
         WineDescription wineDescription = mock(WineDescription.class);
 
         when(wineService.getWineDescription(anyString())).thenReturn(wineDescription);
 
-        wineMvc.perform(get("/wine/description")
+        wineMvc.perform(get("/wine/description/result")
                 .param("wineName", anyString()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("wineDescription", wineDescription))
@@ -186,14 +227,14 @@ public class ControllerTests {
     }
 
     @Test
-    public void getWineDescription_NotFound_Redirect() throws Exception {
+    public void getWineDescriptionResult_NotFound_Redirect() throws Exception {
         when(wineService.getWineDescription(anyString())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/description")
+        wineMvc.perform(get("/wine/description/result")
                 .param("wineName", anyString()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("noDescFound", " not found."))
-                .andExpect(view().name("redirect:/wine/wine-home"))
+                .andExpect(view().name("redirect:/wine/description/search"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
 

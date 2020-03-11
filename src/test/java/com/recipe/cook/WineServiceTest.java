@@ -38,7 +38,7 @@ public class WineServiceTest {
     @Test
     public void getDishPairing_Found() {
         DishPairing dishPairing = new DishPairing();
-        ReflectionTestUtils.setField(wineService, "dishPairUrl", dummyUrl);
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
 
         when(restTemplate.getForEntity(anyString(), eq(DishPairing.class))).thenReturn(new ResponseEntity<>(dishPairing, HttpStatus.OK));
 
@@ -48,8 +48,7 @@ public class WineServiceTest {
 
     @Test
     public void getDishPairing_NotFound() {
-        ReflectionTestUtils.setField(wineService, "dishPairUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(DishPairing.class))).thenThrow(HttpClientErrorException.BadRequest.class);
 
         assertNull(wineService.getDishPairing("wineName"));
@@ -62,8 +61,7 @@ public class WineServiceTest {
         List<String> dummyWines = Arrays.asList("merlot", "riesling");
         WinePairing winePairing = mock(WinePairing.class);
         winePairing.setPairedWines(dummyWines);
-        ReflectionTestUtils.setField(wineService, "winePairUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(WinePairing.class))).thenReturn(new ResponseEntity<>(winePairing, HttpStatus.OK));
 
         assertEquals(winePairing, wineService.getWinePairing(anyString(), anyInt()));
@@ -74,8 +72,7 @@ public class WineServiceTest {
     @Test
     public void getWinePairing_NotFound() {
         WinePairing winePairing = new WinePairing();
-        ReflectionTestUtils.setField(wineService, "winePairUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(WinePairing.class))).thenReturn(new ResponseEntity<>(winePairing, HttpStatus.OK));
 
         assertNull(wineService.getWinePairing(anyString(), anyInt()));
@@ -86,8 +83,7 @@ public class WineServiceTest {
     @Test
     public void getWineDescription_Found() {
         WineDescription wineDescription = mock(WineDescription.class);
-        ReflectionTestUtils.setField(wineService, "wineDescUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(WineDescription.class))).thenReturn(new ResponseEntity<>(wineDescription, HttpStatus.OK));
 
         assertEquals(wineDescription, wineService.getWineDescription("wineName"));
@@ -97,8 +93,7 @@ public class WineServiceTest {
 
     @Test
     public void getWineDescription_NotFound() {
-        ReflectionTestUtils.setField(wineService, "wineDescUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(WineDescription.class))).thenThrow(HttpClientErrorException.BadRequest.class);
 
         assertNull(wineService.getWineDescription("wineName"));
@@ -108,8 +103,7 @@ public class WineServiceTest {
     @Test
     public void getWineRecommendation_Found() {
         WineRecommendation wineRecommendation = new WineRecommendation();
-        ReflectionTestUtils.setField(wineService, "wineRecoUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(WineRecommendation.class))).thenReturn(new ResponseEntity<>(wineRecommendation, HttpStatus.OK));
 
         assertEquals(wineRecommendation, wineService.getWineRecommendation("wineName", 1, 1.0, 1));
@@ -119,8 +113,7 @@ public class WineServiceTest {
 
     @Test
     public void getWineRecommendation_NotFound() {
-        ReflectionTestUtils.setField(wineService, "wineRecoUrl", dummyUrl);
-
+        ReflectionTestUtils.setField(wineService, "wineUrl", dummyUrl);
         when(restTemplate.getForEntity(anyString(), eq(WineRecommendation.class))).thenThrow(HttpClientErrorException.BadRequest.class);
 
         assertNull(wineService.getWineRecommendation("wineName", 1, 1.0, 1));

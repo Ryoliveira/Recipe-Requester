@@ -2,37 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!--/*/ <th:block th:include="fragments/required-tags :: boot-strap-required"></th:block> /*/-->
+
+</head>
+<body>
+
     <div th:fragment="nav">
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="#">Food Requester</a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a href="/" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Wine
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/wine/dishes/search">Dish Pairing</a>
-                            <a class="dropdown-item" href="/wine/pairing/search">Wine Pairing</a>
-                            <a class="dropdown-item" href="/wine/recommendations/search">Wine Recommendation</a>
-                            <a class="dropdown-item" href="/wine/description/search">Wine Description</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://spoonacular.com/food-api" target="_blank" class="nav-link">Spoonacular api</a>
-                    </li>
-                </ul>
-            </div>
-
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Wine
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/wine/dishes/search">Dish Pairing</a>
+                        <a class="dropdown-item" href="/wine/pairing/search">Wine Pairing</a>
+                        <a class="dropdown-item" href="/wine/recommendations/search">Wine Recommendation</a>
+                        <a class="dropdown-item" href="/wine/description/search">Wine Description</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="https://spoonacular.com/food-api" target="_blank" class="nav-link">Spoonacular api</a>
+                </li>
+            </ul>
         </nav>
         <hr>
     </div>
-</head>
-<body>
+
 
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -51,7 +52,7 @@ public class WineServiceImpl implements WineService {
 
             response = restTemplate.getForEntity(url, DishPairing.class);
             pairingResult = response.getBody();
-            pairingResult.setWineName(wineName);
+            pairingResult.setWineName(StringUtils.capitalize(wineName));
 
             LOGGER.info(pairingResult.toString());
 
@@ -106,7 +107,7 @@ public class WineServiceImpl implements WineService {
 
             response = restTemplate.getForEntity(url, WineDescription.class);
             wineDescription = response.getBody();
-            wineDescription.setWineName(wineName);
+            wineDescription.setWineName(StringUtils.capitalize(wineName));
 
             LOGGER.info(wineDescription.toString());
 
@@ -134,7 +135,7 @@ public class WineServiceImpl implements WineService {
 
             response = restTemplate.getForEntity(url, WineRecommendation.class);
             wineRecommendation = response.getBody();
-            wineRecommendation.setWineName(wineName);
+            wineRecommendation.setWineName(StringUtils.capitalize(wineName));
 
             LOGGER.info(wineRecommendation.toString());
 

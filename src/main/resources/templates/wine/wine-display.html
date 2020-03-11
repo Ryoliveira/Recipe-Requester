@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>Wine Pairing Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <!--/*/ <th:block th:include="fragments/required-tags :: boot-strap-required"></th:block> /*/-->
-    <!--/*/ <th:block th:include="fragments/nav :: nav"></th:block> /*/-->
+    <div th:include="fragments/required-tags :: boot-strap-required"/>
+
 </head>
 <body class="wine-bg">
+
+<div th:include="fragments/nav :: nav"/>
+
 <div class="center wine-display-bg wine-display-text" >
     <div id="Dish Pairing" th:if="${pairing}">
         <table>
@@ -31,10 +34,8 @@
         <br>
         <span th:text="${winePairing.pairingText}"></span>
         <br>
-        <p>Paired Wines</p>
-        <div th:each="wine : ${winePairing.pairedWines}">
-            <p th:text="${wine}"></p>
-        </div>
+        <span>Paired Wines: </span>
+        <span th:each="wine, iterStat : ${winePairing.pairedWines}" th:text="!${iterStat.last} ? ${wine} + ', ' : ${wine}"></span>
         <div th:each="product : ${winePairing.wineProductMatches}">
             <h1 th:text="${product.title}"></h1>
             <span><b>Description:</b> <span th:text="${product.description}"></span></span>
@@ -55,7 +56,8 @@
         <div th:each="product : ${wineRecommendation.recommendedWines}">
             <hr>
             <h1 th:text="${product.title}"></h1>
-            <span><b>Description:</b> <span th:text="${product.description}"></span></span>
+            <span><b><u>Description</u></b></span>
+            <p align="justify" th:text="${product.description}"></p>
             <br>
             <img th:src="${product.imageUrl}">
             <br>
@@ -70,7 +72,8 @@
 
     <div id="Wine Description" th:if="${wineDescription}">
         <div>
-            <p th:text="${wineDescription.wineDescription}"></p>
+            <h2 th:text="${wineDescription.wineName}"></h2>
+            <p><b>Description: </b> <span th:text="${wineDescription.wineDescription}"></span></p>
         </div>
         <form th:action="@{/wine/description/search}">
             <input type="submit" value="Back to Search" class="btn btn-primary">
