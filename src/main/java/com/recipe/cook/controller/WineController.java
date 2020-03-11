@@ -30,11 +30,6 @@ public class WineController {
     }
 
 
-    @GetMapping("/home")
-    public String wineHomePage() {
-        return "wine/wine-home";
-    }
-
     @GetMapping("/dishes/search")
     public String getDishPairingSearchPage(Model theModel) {
         theModel.addAttribute("dishPairingSearch", true);

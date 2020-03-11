@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Misc Home Page</title>
+    <div th:include="fragments/required-tags :: boot-strap-required" />
+</head>
+<body>
+
+<div th:include="fragments/nav :: nav" />
+
+
+<div>
+    <form th:action="@{/misc/quick-answer/answer}">
+        <label>Question: </label>
+        <input type="text" th:name="question" required>
+        <input type="submit" value="Ask">
+    </form>
+</div>
+
+</body>
+</html>

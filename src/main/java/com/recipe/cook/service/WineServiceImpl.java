@@ -26,8 +26,8 @@ public class WineServiceImpl implements WineService {
 
     private RestTemplate restTemplate;
 
-    @Value("${Wine.url}")
-    private String wineUrl;
+    @Value("${spoonacular.url}")
+    private String spoonacularUrl;
 
     @Value("${spoon.key}")
     private String key;
@@ -46,9 +46,10 @@ public class WineServiceImpl implements WineService {
         try {
             encodedName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
-            String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/dishes")
+            String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/wine/dishes")
                     .queryParam("apiKey", key)
-                    .queryParam("wine", encodedName).toUriString();
+                    .queryParam("wine", encodedName)
+                    .toUriString();
 
             response = restTemplate.getForEntity(url, DishPairing.class);
             pairingResult = response.getBody();
@@ -74,10 +75,11 @@ public class WineServiceImpl implements WineService {
             e.printStackTrace();
         }
 
-        String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/pairing")
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/wine/pairing")
                 .queryParam("apiKey", key)
                 .queryParam("food", encodedFoodName)
-                .queryParam("maxPrice", maxPrice).toUriString();
+                .queryParam("maxPrice", maxPrice)
+                .toUriString();
 
 
         ResponseEntity<WinePairing> response = restTemplate.getForEntity(url, WinePairing.class);
@@ -101,9 +103,10 @@ public class WineServiceImpl implements WineService {
         try {
             encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
-            String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/description")
+            String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/wine/description")
                     .queryParam("apiKey", key)
-                    .queryParam("wine", encodedWineName).toUriString();
+                    .queryParam("wine", encodedWineName)
+                    .toUriString();
 
             response = restTemplate.getForEntity(url, WineDescription.class);
             wineDescription = response.getBody();
@@ -126,12 +129,13 @@ public class WineServiceImpl implements WineService {
         try {
             encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
-            String url = UriComponentsBuilder.fromHttpUrl(wineUrl).path("/recommendation")
+            String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/wine/recommendation")
                     .queryParam("apiKey", key)
                     .queryParam("wine", encodedWineName)
                     .queryParam("maxPrice", maxPrice)
                     .queryParam("minRating", minRating)
-                    .queryParam("number", number).toUriString();
+                    .queryParam("number", number)
+                    .toUriString();
 
             response = restTemplate.getForEntity(url, WineRecommendation.class);
             wineRecommendation = response.getBody();

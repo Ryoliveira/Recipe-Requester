@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Misc Display</title>
+    <div th:include="fragments/required-tags :: boot-strap-required" />
+</head>
+<body>
+
+<div th:include="fragments/nav :: nav" />
+
+<p>Work in progress</p>
+
+<div class="center">
+    <div th:if="${answer}">
+        <h5>Question: <span th:text="${answer.question}">?</span></h5>
+        <img th:src="${answer.image}">
+        <h5>Answer: <span th:text="${answer.answer}"></span></h5>
+    </div>
+</div>
+
+</body>
+</html>
