@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,28 +31,22 @@ public class MiscServiceImpl implements MiscService {
     private String key;
 
     @Autowired
-    public MiscServiceImpl(RestTemplate restTemplate){
+    public MiscServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
 
     @Override
     public QuickAnswerResult getQuickAnswer(String question) {
-        String encodedQuestion = null;
         QuickAnswerResult quickAnswerResult;
 
         //Todo deal with case when question cant be answered
 
-        try{
-            encodedQuestion = URLEncoder.encode(question, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
+        String encodedQuestion = encodeString(question);
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/quickAnswer")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("q", encodedQuestion)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("q", encodedQuestion)
+                .toUriString();
 
         ResponseEntity<QuickAnswerResult> response = restTemplate.getForEntity(url, QuickAnswerResult.class);
 
@@ -66,14 +60,47 @@ public class MiscServiceImpl implements MiscService {
 
     @Override
     public DetectedFoodList detectFoodInText(String text) {
+        DetectedFoodList detectedFoodList;
 
-        return null;
+        //todo handle when no food is detected
+        String encodedText = encodeString(text);
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/detect")
+                .queryParam("apiKey", key)
+                .queryParam("text", encodedText)
+
+                .toUriString();
+        //Setting media type
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.valueOf(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+
+        ResponseEntity<DetectedFoodList> response = restTemplate.exchange(url, HttpMethod.POST, entity, DetectedFoodList.class);
+
+        detectedFoodList = response.getBody();
+
+        LOGGER.info(detectedFoodList.toString());
+
+        return detectedFoodList;
     }
 
     @Override
     public SiteContent searchSiteContent(String query) {
+        SiteContent siteContent;
+        String encodedQuery = encodeString(query);
 
-        return null;
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/site/search")
+                                         .queryParam("apiKey", key)
+                                         .queryParam("query", encodedQuery)
+                                         .toUriString();
+
+        ResponseEntity<SiteContent> response = restTemplate.getForEntity(url, SiteContent.class);
+
+        siteContent = response.getBody();
+
+        LOGGER.info(siteContent.toString());
+
+        return siteContent;
     }
 
     @Override
@@ -92,5 +119,15 @@ public class MiscServiceImpl implements MiscService {
     public String getRandomFoodTrivia() {
 
         return null;
+    }
+
+    public String encodeString(String s) {
+        String encodedString = null;
+        try {
+            encodedString = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return encodedString;
     }
 }

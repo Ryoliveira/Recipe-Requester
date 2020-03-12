@@ -1,5 +1,6 @@
 package com.recipe.cook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.util.List;
@@ -11,6 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class DetectedFoodList {
 
-    private List<Food> annotations;
-
+    private List<FoodItem> annotations;
 }

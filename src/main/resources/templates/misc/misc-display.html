@@ -3,19 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Misc Display</title>
-    <div th:include="fragments/required-tags :: boot-strap-required" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <div th:include="fragments/required-tags :: boot-strap-required"/>
 </head>
 <body>
 
-<div th:include="fragments/nav :: nav" />
+<div th:include="fragments/nav :: nav"/>
 
-<p>Work in progress</p>
 
 <div class="center">
     <div th:if="${answer}">
         <h5>Question: <span th:text="${answer.question}">?</span></h5>
         <img th:src="${answer.image}">
         <h5>Answer: <span th:text="${answer.answer}"></span></h5>
+    </div>
+    <div th:if="${detectedFoodList}">
+        <h2><u>Food Detected</u></h2>
+        <hr>
+        <div th:each="foodItem : ${detectedFoodList.annotations}">
+            <h4 th:text="${foodItem.annotation}"></h4>
+            <img th:src="${foodItem.image}">
+            <p th:text="${foodItem.tag}"></p>
+            <hr>
+        </div>
+    </div>
+    <div th:if="${siteContent}">
+        <h3>Articles</h3>
+        <div th:each="article : ${siteContent.articleList}">
+            <u><h3 th:text="${article.name}"></h3></u>
+            <img th:src="${article.image}">
+            <br>
+            <a th:href="${article.link}" target="_blank">Article Link</a>
+        </div>
+        <hr>
+        <h3>products</h3>
+        <div th:each="product : ${siteContent.groceryProductList}">
+            <u><h3 th:text="${product.name}"></h3></u>
+            <img th:src="${product.image}">
+            <br>
+            <a th:href="${product.link}" target="_blank">Product Link</a>
+        </div>
+        <hr>
+        <h3>Menu Items</h3>
+        <div th:each="menuItem : ${siteContent.menuItemList}">
+            <u><h3 th:text="${menuItem.name}"></h3></u>
+            <img th:src="${menuItem.image}">
+            <br>
+            <a th:href="${menuItem.link}" target="_blank">Item Link</a>
+        </div>
+        <hr>
+        <h3>Recipes</h3>
+        <div th:each="recipe : ${siteContent.recipeList}">
+            <u><h3 th:text="${recipe.name}"></h3></u>
+            <img th:src="${recipe.image}">
+            <br>
+            <a th:href="${recipe.link}" target="_blank">Recipe Link</a>
+        </div>
     </div>
 </div>
 
