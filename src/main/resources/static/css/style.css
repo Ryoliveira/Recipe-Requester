@@ -21,3 +21,13 @@
         background-repeat: no-repeat;
         background-size: cover;
 }
+
+.misc-bg{
+        background-image: url(/images/misc/vintage-restaurant.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+}
+
+.misc-display-bg{
+    background-color: #F6B71C
+}

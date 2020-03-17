@@ -6,11 +6,11 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <div th:include="fragments/required-tags :: boot-strap-required"/>
 </head>
-<body>
+<body class="misc-bg">
 
 <div th:include="fragments/nav :: nav"/>
 
-<div class="center">
+<div class="center misc-display-bg">
     <div th:if="${quickAnswerSearch}">
         <form th:action="@{/misc/quick-answer/answer}">
             <label>Question: </label>

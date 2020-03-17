@@ -6,12 +6,11 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <div th:include="fragments/required-tags :: boot-strap-required"/>
 </head>
-<body>
+<body class="misc-bg">
 
 <div th:include="fragments/nav :: nav"/>
 
-
-<div class="center">
+<div class="center misc-display-bg">
     <div th:if="${answer}">
         <h5>Question: <span th:text="${answer.question}">?</span></h5>
         <img th:src="${answer.image}">

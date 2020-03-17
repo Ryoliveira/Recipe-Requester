@@ -49,7 +49,7 @@ public class MiscController {
     @GetMapping("/detect-food/analyzer-page")
     public String getDetectFoodPage(Model theModel) {
         theModel.addAttribute("analyzeText", true);
-        return "/misc/misc-home";
+        return "misc/misc-home";
     }
 
     @GetMapping("/detect-food/analyze")
@@ -60,7 +60,7 @@ public class MiscController {
 
         if ((detectedFoodList = miscService.detectFoodInText(text)) != null) {
             theModel.addAttribute("detectedFoodList", detectedFoodList);
-            return "/misc/misc-display";
+            return "misc/misc-display";
         } else {
             redirectAttributes.addFlashAttribute("NoDetectedFood", "No food items were detected in the text given");
             return "redirect:/misc/detect-food/analyzer-page";
@@ -70,7 +70,7 @@ public class MiscController {
     @GetMapping("/site-search/search")
     public String getSiteSearchPage(Model theModel) {
         theModel.addAttribute("siteSearch", true);
-        return "/misc/misc-home";
+        return "misc/misc-home";
     }
 
     @GetMapping("/site-search/results")
@@ -80,7 +80,7 @@ public class MiscController {
         siteContent = miscService.searchSiteContent(query);
         theModel.addAttribute("siteContent", siteContent);
 
-        return "/misc/misc-display";
+        return "misc/misc-display";
     }
 
     @GetMapping("/food-video/search")
@@ -101,7 +101,7 @@ public class MiscController {
 
         if ((videoResults = miscService.searchFoodVideos(query, type, cuisine, diet, number)) != null) {
             theModel.addAttribute("foodVideos", videoResults);
-            return "/misc/misc-display";
+            return "misc/misc-display";
         } else {
             redirectAttributes.addFlashAttribute("noDetectedFood", "No videos found with those settings");
             return "redirect:/misc/food-video/search";
@@ -114,7 +114,7 @@ public class MiscController {
         TextResponse joke = miscService.getRandomFoodJoke();
         theModel.addAttribute("joke", joke);
 
-        return "/misc/misc-display";
+        return "misc/misc-display";
     }
 
     @GetMapping("/random/trivia")
@@ -122,9 +122,7 @@ public class MiscController {
         TextResponse trivia = miscService.getRandomFoodTrivia();
         theModel.addAttribute("trivia", trivia);
 
-        return "/misc/misc-display";
+        return "misc/misc-display";
 
     }
-
-
 }

@@ -113,6 +113,4 @@ public class WineServiceTest {
         assertNull(wineServiceMock.getWineRecommendation("wineName", 1, 1.0, 1));
         verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WineRecommendation.class));
     }
-
-
 }
