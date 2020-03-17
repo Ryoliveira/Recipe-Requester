@@ -1,9 +1,6 @@
 package com.recipe.cook.service;
 
-import com.recipe.cook.entity.DetectedFoodList;
-import com.recipe.cook.entity.QuickAnswerResult;
-import com.recipe.cook.entity.SiteContent;
-import com.recipe.cook.entity.VideoResults;
+import com.recipe.cook.entity.*;
 
 public interface MiscService {
 
@@ -13,9 +10,9 @@ public interface MiscService {
 
     SiteContent searchSiteContent(String query);
 
-    VideoResults searchFoodVideos(String query, String type, String cuisine, String diet);
+    VideoResults searchFoodVideos(String query, String type, String cuisine, String diet, int number);
 
-    String getRandomFoodJoke();
+    TextResponse getRandomFoodJoke();
 
-    String getRandomFoodTrivia();
+    TextResponse getRandomFoodTrivia();
 }

@@ -43,13 +43,12 @@ public class WineController {
 
         if ((dishPairing = wineService.getDishPairing(wineName)) != null) {
             theModel.addAttribute("pairing", dishPairing);
+            return "wine/wine-display";
         } else {
             String msg = new StringBuilder("No pairings found for ").append(wineName).toString();
             redirectAttr.addFlashAttribute("noDishPairingFound", msg);
             return "redirect:/wine/dishes/search";
         }
-
-        return "wine/wine-display";
     }
 
     @GetMapping("/pairing/search")
@@ -66,15 +65,12 @@ public class WineController {
 
         if ((winePairing = wineService.getWinePairing(foodName, maxPrice)) != null) {
             theModel.addAttribute("winePairing", winePairing);
+            return "wine/wine-display";
         } else {
             String msg = new StringBuilder("No pairings found for ").append(foodName).toString();
             redirectAttr.addFlashAttribute("noWinePairingFound", msg);
             return "redirect:/wine/pairing/search";
         }
-
-        LOGGER.info(winePairing.toString());
-
-        return "wine/wine-display";
     }
 
     @GetMapping("/recommendations/search")
@@ -93,21 +89,18 @@ public class WineController {
 
         if ((wineRecommendation = wineService.getWineRecommendation(wineName, maxPrice, minRating, number)) != null) {
             theModel.addAttribute("wineRecommendation", wineRecommendation);
+            return "wine/wine-display";
         } else {
             String msg = new StringBuilder(wineName).append(" not found.").toString();
             redirectAttr.addFlashAttribute("noRecommendationFound", msg);
             return "redirect:/wine/recommendations/search";
         }
-
-
-        return "wine/wine-display";
     }
 
     @GetMapping("/description/search")
     public String getWineDescriptionSearchPage(Model theModel) {
         theModel.addAttribute("wineDescriptionSearch", true);
         return "wine/wine-home";
-
     }
 
     @GetMapping("/description/result")
@@ -117,15 +110,11 @@ public class WineController {
 
         if ((wineDescription = wineService.getWineDescription(wineName)) != null) {
             theModel.addAttribute("wineDescription", wineDescription);
+            return "wine/wine-display";
         } else {
             String msg = new StringBuilder(wineName).append(" not found.").toString();
             redirectAttr.addFlashAttribute("noDescFound", msg);
             return "redirect:/wine/description/search";
         }
-
-        return "wine/wine-display";
-
     }
-
-
 }

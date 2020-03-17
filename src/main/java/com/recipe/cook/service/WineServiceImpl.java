@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpClientErrorException;
@@ -42,7 +41,6 @@ public class WineServiceImpl implements WineService {
     public DishPairing getDishPairing(String wineName) {
         DishPairing pairingResult;
         String encodedName;
-        ResponseEntity<DishPairing> response;
         try {
             encodedName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
@@ -51,8 +49,7 @@ public class WineServiceImpl implements WineService {
                     .queryParam("wine", encodedName)
                     .toUriString();
 
-            response = restTemplate.getForEntity(url, DishPairing.class);
-            pairingResult = response.getBody();
+            pairingResult = restTemplate.getForObject(url, DishPairing.class);
             pairingResult.setWineName(StringUtils.capitalize(wineName));
 
             LOGGER.info(pairingResult.toString());
@@ -82,8 +79,7 @@ public class WineServiceImpl implements WineService {
                 .toUriString();
 
 
-        ResponseEntity<WinePairing> response = restTemplate.getForEntity(url, WinePairing.class);
-        winePairing = response.getBody();
+        winePairing = restTemplate.getForObject(url, WinePairing.class);
         winePairing.setFoodName(foodName);
 
         LOGGER.info(winePairing.toString());
@@ -99,7 +95,6 @@ public class WineServiceImpl implements WineService {
     public WineDescription getWineDescription(String wineName) {
         WineDescription wineDescription;
         String encodedWineName;
-        ResponseEntity<WineDescription> response;
         try {
             encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
@@ -108,8 +103,7 @@ public class WineServiceImpl implements WineService {
                     .queryParam("wine", encodedWineName)
                     .toUriString();
 
-            response = restTemplate.getForEntity(url, WineDescription.class);
-            wineDescription = response.getBody();
+            wineDescription = restTemplate.getForObject(url, WineDescription.class);
             wineDescription.setWineName(StringUtils.capitalize(wineName));
 
             LOGGER.info(wineDescription.toString());
@@ -124,8 +118,6 @@ public class WineServiceImpl implements WineService {
     public WineRecommendation getWineRecommendation(String wineName, int maxPrice, double minRating, int number) {
         WineRecommendation wineRecommendation;
         String encodedWineName;
-        ResponseEntity<WineRecommendation> response;
-
         try {
             encodedWineName = URLEncoder.encode(wineName, StandardCharsets.UTF_8.toString());
 
@@ -137,8 +129,7 @@ public class WineServiceImpl implements WineService {
                     .queryParam("number", number)
                     .toUriString();
 
-            response = restTemplate.getForEntity(url, WineRecommendation.class);
-            wineRecommendation = response.getBody();
+            wineRecommendation = restTemplate.getForObject(url, WineRecommendation.class);
             wineRecommendation.setWineName(StringUtils.capitalize(wineName));
 
             LOGGER.info(wineRecommendation.toString());

@@ -5,13 +5,12 @@ import com.recipe.cook.entity.WineDescription;
 import com.recipe.cook.entity.WinePairing;
 import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.service.WineServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -28,31 +27,34 @@ import static org.mockito.Mockito.*;
 public class WineServiceTest {
 
     @InjectMocks
-    private WineServiceImpl wineService;
+    private WineServiceImpl wineServiceMock;
 
     @Mock
-    private RestTemplate restTemplate;
+    private RestTemplate restTemplateMock;
 
     private String dummyUrl = "https://api.spoonacular.com";
+
+    @BeforeEach
+    public void setUrl() {
+        ReflectionTestUtils.setField(wineServiceMock, "spoonacularUrl", dummyUrl);
+    }
 
     @Test
     public void getDishPairing_Found() {
         DishPairing dishPairing = new DishPairing();
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
 
-        when(restTemplate.getForEntity(anyString(), eq(DishPairing.class))).thenReturn(new ResponseEntity<>(dishPairing, HttpStatus.OK));
+        when(restTemplateMock.getForObject(anyString(), eq(DishPairing.class))).thenReturn(dishPairing);
 
-        assertEquals(dishPairing, wineService.getDishPairing("wineName"));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(DishPairing.class));
+        assertEquals(dishPairing, wineServiceMock.getDishPairing("wineName"));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(DishPairing.class));
     }
 
     @Test
     public void getDishPairing_NotFound() {
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(DishPairing.class))).thenThrow(HttpClientErrorException.BadRequest.class);
+        when(restTemplateMock.getForObject(anyString(), eq(DishPairing.class))).thenThrow(HttpClientErrorException.BadRequest.class);
 
-        assertNull(wineService.getDishPairing("wineName"));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(DishPairing.class));
+        assertNull(wineServiceMock.getDishPairing("wineName"));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(DishPairing.class));
 
     }
 
@@ -61,63 +63,55 @@ public class WineServiceTest {
         List<String> dummyWines = Arrays.asList("merlot", "riesling");
         WinePairing winePairing = mock(WinePairing.class);
         winePairing.setPairedWines(dummyWines);
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(WinePairing.class))).thenReturn(new ResponseEntity<>(winePairing, HttpStatus.OK));
+        when(restTemplateMock.getForObject(anyString(), eq(WinePairing.class))).thenReturn(winePairing);
 
-        assertEquals(winePairing, wineService.getWinePairing(anyString(), anyInt()));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WinePairing.class));
+        assertEquals(winePairing, wineServiceMock.getWinePairing(anyString(), anyInt()));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WinePairing.class));
 
     }
 
     @Test
     public void getWinePairing_NotFound() {
         WinePairing winePairing = new WinePairing();
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(WinePairing.class))).thenReturn(new ResponseEntity<>(winePairing, HttpStatus.OK));
+        when(restTemplateMock.getForObject(anyString(), eq(WinePairing.class))).thenReturn(winePairing);
 
-        assertNull(wineService.getWinePairing(anyString(), anyInt()));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WinePairing.class));
-
+        assertNull(wineServiceMock.getWinePairing(anyString(), anyInt()));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WinePairing.class));
     }
 
     @Test
     public void getWineDescription_Found() {
         WineDescription wineDescription = mock(WineDescription.class);
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(WineDescription.class))).thenReturn(new ResponseEntity<>(wineDescription, HttpStatus.OK));
+        when(restTemplateMock.getForObject(anyString(), eq(WineDescription.class))).thenReturn(wineDescription);
 
-        assertEquals(wineDescription, wineService.getWineDescription("wineName"));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WineDescription.class));
-
+        assertEquals(wineDescription, wineServiceMock.getWineDescription("wineName"));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WineDescription.class));
     }
 
     @Test
     public void getWineDescription_NotFound() {
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(WineDescription.class))).thenThrow(HttpClientErrorException.BadRequest.class);
+        when(restTemplateMock.getForObject(anyString(), eq(WineDescription.class))).thenThrow(HttpClientErrorException.BadRequest.class);
 
-        assertNull(wineService.getWineDescription("wineName"));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WineDescription.class));
+        assertNull(wineServiceMock.getWineDescription("wineName"));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WineDescription.class));
     }
 
     @Test
     public void getWineRecommendation_Found() {
         WineRecommendation wineRecommendation = new WineRecommendation();
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(WineRecommendation.class))).thenReturn(new ResponseEntity<>(wineRecommendation, HttpStatus.OK));
 
-        assertEquals(wineRecommendation, wineService.getWineRecommendation("wineName", 1, 1.0, 1));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WineRecommendation.class));
+        when(restTemplateMock.getForObject(anyString(), eq(WineRecommendation.class))).thenReturn(wineRecommendation);
 
+        assertEquals(wineRecommendation, wineServiceMock.getWineRecommendation("wineName", 1, 1.0, 1));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WineRecommendation.class));
     }
 
     @Test
     public void getWineRecommendation_NotFound() {
-        ReflectionTestUtils.setField(wineService, "spoonacularUrl", dummyUrl);
-        when(restTemplate.getForEntity(anyString(), eq(WineRecommendation.class))).thenThrow(HttpClientErrorException.BadRequest.class);
+        when(restTemplateMock.getForObject(anyString(), eq(WineRecommendation.class))).thenThrow(HttpClientErrorException.BadRequest.class);
 
-        assertNull(wineService.getWineRecommendation("wineName", 1, 1.0, 1));
-        verify(restTemplate, atMostOnce()).getForEntity(anyString(), eq(WineRecommendation.class));
+        assertNull(wineServiceMock.getWineRecommendation("wineName", 1, 1.0, 1));
+        verify(restTemplateMock, atMostOnce()).getForObject(anyString(), eq(WineRecommendation.class));
     }
 
 

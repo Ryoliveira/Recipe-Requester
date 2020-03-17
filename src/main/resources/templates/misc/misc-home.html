@@ -14,7 +14,8 @@
     <div th:if="${quickAnswerSearch}">
         <form th:action="@{/misc/quick-answer/answer}">
             <label>Question: </label>
-            <input type="text" th:name="question" required>
+            <input type="text" th:name="question" required><br>
+            <i th:text="${answerNotFound}" class="text-danger"></i><br>
             <input type="submit" value="Ask">
         </form>
     </div>
@@ -23,6 +24,7 @@
         <p>Type in a paragraph about what foods you like, our analyzer will detect which foods you write about.</p>
         <form th:action="@{/misc/detect-food/analyze}" id="analyzerForm">
             <textarea rows="4" cols="50" th:name="text" form="analyzerForm">Enter Text here </textarea><br>
+            <i th:text="${NoDetectedFood}" class="text-danger"></i><br>
             <input type="submit" value="Analyze">
         </form>
     </div>
@@ -30,6 +32,28 @@
         <form th:action="@{/misc/site-search/results}">
             <label>Query: </label>
             <input type="text" th:name="query" required>
+            <input type="submit">
+        </form>
+    </div>
+    <div th:if="${foodVideoSearch}">
+        <form th:action="@{/misc/food-video/results}">
+            <label>Query: </label>
+            <input type="text" name="query" required><br>
+            <label>Type: </label>
+            <select  th:name="type" th:include="fragments/form-select-populate :: food-type">
+
+            </select><br>
+            <label>Cuisine: </label>
+            <select th:name="cuisine" th:include="fragments/form-select-populate :: cuisine-type">
+
+            </select><br>
+            <label>Diet: </label>
+            <select th:name="diet" th:include="fragments/form-select-populate :: diet-type">
+
+            </select><br>
+            <label>Num of results: </label>
+            <input th:name="number" type="number" min="1" max="10" value="1"><br>
+            <i th:text="${noDetectedFood}" class="text-danger"></i><br>
             <input type="submit">
         </form>
     </div>

@@ -60,6 +60,28 @@
             <a th:href="${recipe.link}" target="_blank">Recipe Link</a>
         </div>
     </div>
+    <div th:if="${joke}">
+        <h5 th:text="${joke.text}"></h5>
+        <form th:action="@{/misc/random/joke}">
+            <input type="submit" value="Get Another Joke">
+        </form>
+    </div>
+    <div th:if="${trivia}">
+        <h5 th:text="${trivia.text}"></h5>
+        <form th:action="@{/misc/random/trivia}">
+            <input type="submit" value="Get More Trivia">
+        </form>
+    </div>
+    <div th:if="${foodVideos}">
+        <h5><u>Video Results</u></h5>
+        <div th:each="video : ${foodVideos.videoDetailsList}">
+            <p>Title: <span th:text="${video.title}"/></p>
+            <p>Views: <span th:text="${video.views}"/> </p>
+            <img th:src="${video.thumbnail}"/><br>
+            <a th:href="${video.getYoutubeLink()}" target="_blank">Go To Video</a>
+            <hr>
+        </div>
+    </div>
 </div>
 
 </body>

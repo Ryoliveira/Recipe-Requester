@@ -1,9 +1,6 @@
 package com.recipe.cook.service;
 
-import com.recipe.cook.entity.DetectedFoodList;
-import com.recipe.cook.entity.QuickAnswerResult;
-import com.recipe.cook.entity.SiteContent;
-import com.recipe.cook.entity.VideoResults;
+import com.recipe.cook.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,34 +37,30 @@ public class MiscServiceImpl implements MiscService {
     public QuickAnswerResult getQuickAnswer(String question) {
         QuickAnswerResult quickAnswerResult;
 
-        //Todo deal with case when question cant be answered
-
         String encodedQuestion = encodeString(question);
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/quickAnswer")
                 .queryParam("apiKey", key)
                 .queryParam("q", encodedQuestion)
                 .toUriString();
 
-        ResponseEntity<QuickAnswerResult> response = restTemplate.getForEntity(url, QuickAnswerResult.class);
-
-        quickAnswerResult = response.getBody();
-        quickAnswerResult.setQuestion(question);
-
-        LOGGER.info(quickAnswerResult.toString());
-
-        return quickAnswerResult;
+        quickAnswerResult = restTemplate.getForObject(url, QuickAnswerResult.class);
+        if(quickAnswerResult.getAnswer() != null) {
+            quickAnswerResult.setQuestion(question);
+            LOGGER.info(quickAnswerResult.toString());
+            return quickAnswerResult;
+        }else{
+            return null;
+        }
     }
 
     @Override
     public DetectedFoodList detectFoodInText(String text) {
         DetectedFoodList detectedFoodList;
 
-        //todo handle when no food is detected
         String encodedText = encodeString(text);
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/detect")
                 .queryParam("apiKey", key)
                 .queryParam("text", encodedText)
-
                 .toUriString();
         //Setting media type
         HttpHeaders headers = new HttpHeaders();
@@ -76,12 +69,14 @@ public class MiscServiceImpl implements MiscService {
 
 
         ResponseEntity<DetectedFoodList> response = restTemplate.exchange(url, HttpMethod.POST, entity, DetectedFoodList.class);
-
         detectedFoodList = response.getBody();
 
-        LOGGER.info(detectedFoodList.toString());
-
-        return detectedFoodList;
+        if(!detectedFoodList.getAnnotations().isEmpty()){
+            LOGGER.info(detectedFoodList.toString());
+            return detectedFoodList;
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -94,9 +89,7 @@ public class MiscServiceImpl implements MiscService {
                                          .queryParam("query", encodedQuery)
                                          .toUriString();
 
-        ResponseEntity<SiteContent> response = restTemplate.getForEntity(url, SiteContent.class);
-
-        siteContent = response.getBody();
+        siteContent = restTemplate.getForObject(url, SiteContent.class);
 
         LOGGER.info(siteContent.toString());
 
@@ -104,21 +97,56 @@ public class MiscServiceImpl implements MiscService {
     }
 
     @Override
-    public VideoResults searchFoodVideos(String query, String type, String cuisine, String diet) {
+    public VideoResults searchFoodVideos(String query, String type, String cuisine, String diet, int number) {
+        VideoResults videoResults;
 
-        return null;
+        String encodedQuery = encodeString(query);
+        String encodedType = encodeString(type);
+        String encodedCuisine = encodeString(cuisine);
+        String encodedDiet = encodeString(diet);
+
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("food/videos/search")
+                                         .queryParam("apiKey", key)
+                                         .queryParam("query", encodedQuery)
+                                         .queryParam("type", encodedType)
+                                         .queryParam("cuisine", encodedCuisine)
+                                         .queryParam("diet", encodedDiet)
+                                         .queryParam("number", number)
+                                         .toUriString();
+
+        videoResults = restTemplate.getForObject(url, VideoResults.class);
+        if(videoResults.getTotalResults() != 0){
+            LOGGER.info(videoResults.toString());
+            return videoResults;
+        }else {
+            return null;
+        }
     }
 
     @Override
-    public String getRandomFoodJoke() {
+    public TextResponse getRandomFoodJoke() {
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("food/jokes/random")
+                                         .queryParam("apiKey", key)
+                                         .toUriString();
 
-        return null;
+        TextResponse joke = restTemplate.getForObject(url, TextResponse.class);
+
+        LOGGER.info(joke.toString());
+
+        return joke;
     }
 
     @Override
-    public String getRandomFoodTrivia() {
+    public TextResponse getRandomFoodTrivia() {
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("food/trivia/random")
+                .queryParam("apiKey", key)
+                .toUriString();
 
-        return null;
+        TextResponse trivia = restTemplate.getForObject(url, TextResponse.class);
+
+        LOGGER.info(trivia.toString());
+
+        return trivia;
     }
 
     public String encodeString(String s) {

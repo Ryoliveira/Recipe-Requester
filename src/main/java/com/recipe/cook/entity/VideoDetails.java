@@ -23,4 +23,9 @@ public class VideoDetails {
 
     private String youTubeId;
 
+
+    public String getYoutubeLink(){
+        return "https://www.youtube.com/watch?v=" + youTubeId;
+    }
+
 }

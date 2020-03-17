@@ -1,7 +1,5 @@
 package com.recipe.cook;
 
-
-import com.recipe.cook.controller.MainController;
 import com.recipe.cook.controller.WineController;
 import com.recipe.cook.entity.DishPairing;
 import com.recipe.cook.entity.WineDescription;
@@ -9,6 +7,7 @@ import com.recipe.cook.entity.WinePairing;
 import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.service.WineServiceImpl;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -23,9 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ControllerTests {
-
-    MockMvc mainMvc;
+public class WineControllerTests {
 
     MockMvc wineMvc;
 
@@ -34,26 +31,12 @@ public class ControllerTests {
 
     @Before
     public void setUp() {
-        final MainController mainController = new MainController();
         final WineController wineController = new WineController(wineService);
-
-        mainMvc = MockMvcBuilders.standaloneSetup(mainController).build();
         wineMvc = MockMvcBuilders.standaloneSetup(wineController).build();
     }
 
-
-    //MainController
     @Test
-    public void homePage() throws Exception {
-        mainMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("home"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
-
-    //WineController
-    @Test
+    @Ignore
     public void wineHomePage() throws Exception {
 
         wineMvc.perform(get("/wine/home"))
@@ -240,5 +223,4 @@ public class ControllerTests {
 
         verify(wineService, atMostOnce()).getWineDescription(anyString());
     }
-
 }
