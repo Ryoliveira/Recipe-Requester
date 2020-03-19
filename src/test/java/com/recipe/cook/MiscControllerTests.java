@@ -49,7 +49,7 @@ public class MiscControllerTests {
         when(miscServiceMock.getQuickAnswer(anyString())).thenReturn(quickAnswerResultMock);
 
         mockMvc.perform(get("/misc/quick-answer/answer")
-                .param("question", "test"))
+                .param("question", "Test"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("answer", quickAnswerResultMock))
                 .andExpect(view().name("misc/misc-display"))
@@ -62,7 +62,7 @@ public class MiscControllerTests {
         when(miscServiceMock.getQuickAnswer(anyString())).thenReturn(null);
 
         mockMvc.perform(get("/misc/quick-answer/answer")
-                .param("question", "test"))
+                .param("question", "Test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("answerNotFound", "No answer could be found."))
                 .andExpect(view().name("redirect:/misc/quick-answer/ask"))
@@ -86,7 +86,7 @@ public class MiscControllerTests {
         when(miscServiceMock.detectFoodInText(anyString())).thenReturn(detectedFoodListMock);
 
         mockMvc.perform(get("/misc/detect-food/analyze")
-                .param("text", "test"))
+                .param("text", "Test"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("detectedFoodList", detectedFoodListMock))
                 .andExpect(view().name("misc/misc-display"))
@@ -99,7 +99,7 @@ public class MiscControllerTests {
         when(miscServiceMock.detectFoodInText(anyString())).thenReturn(null);
 
         mockMvc.perform(get("/misc/detect-food/analyze")
-                .param("text", "test"))
+                .param("text", "Test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("NoDetectedFood", "No food items were detected in the text given"))
                 .andExpect(view().name("redirect:/misc/detect-food/analyzer-page"))
@@ -124,7 +124,7 @@ public class MiscControllerTests {
         when(miscServiceMock.searchSiteContent(anyString())).thenReturn(siteContentMock);
 
         mockMvc.perform(get("/misc/site-search/results")
-                .param("query", "test"))
+                .param("query", "Test"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("siteContent", siteContentMock))
                 .andExpect(view().name("misc/misc-display"))
@@ -149,10 +149,10 @@ public class MiscControllerTests {
         when(miscServiceMock.searchFoodVideos(anyString(), anyString(), anyString(), anyString(), anyInt())).thenReturn(videoResults);
 
         mockMvc.perform(get("/misc/food-video/results")
-                .param("query", "test")
-                .param("type", "test")
-                .param("cuisine", "test")
-                .param("diet", "test")
+                .param("query", "Test")
+                .param("type", "Test")
+                .param("cuisine", "Test")
+                .param("diet", "Test")
                 .param("number", "1"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("foodVideos", videoResults))
@@ -166,10 +166,10 @@ public class MiscControllerTests {
         when(miscServiceMock.searchFoodVideos(anyString(), anyString(), anyString(), anyString(), anyInt())).thenReturn(null);
 
         mockMvc.perform(get("/misc/food-video/results")
-                .param("query", "test")
-                .param("type", "test")
-                .param("cuisine", "test")
-                .param("diet", "test")
+                .param("query", "Test")
+                .param("type", "Test")
+                .param("cuisine", "Test")
+                .param("diet", "Test")
                 .param("number", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("noDetectedFood", "No videos found with those settings"))

@@ -81,10 +81,10 @@ public class WineController {
 
     @GetMapping("/recommendations/results")
     public String getWineRecommendationsResults(@RequestParam("wineName") String wineName,
-                                        @RequestParam("maxPrice") int maxPrice,
-                                        @RequestParam("minRating") double minRating,
-                                        @RequestParam("number") int number,
-                                        Model theModel, RedirectAttributes redirectAttr) {
+                                                @RequestParam("maxPrice") int maxPrice,
+                                                @RequestParam("minRating") double minRating,
+                                                @RequestParam("number") int number,
+                                                Model theModel, RedirectAttributes redirectAttr) {
         WineRecommendation wineRecommendation;
 
         if ((wineRecommendation = wineService.getWineRecommendation(wineName, maxPrice, minRating, number)) != null) {

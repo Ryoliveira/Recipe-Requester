@@ -70,7 +70,7 @@ public class MiscServiceTest {
 
         when(restTemplateMock.exchange(anyString(), eq(HttpMethod.POST), any(), eq(DetectedFoodList.class))).thenReturn(new ResponseEntity<>(detectedFoodListSpy, HttpStatus.OK));
 
-        assertNotNull(miscServiceMock.detectFoodInText("test"));
+        assertNotNull(miscServiceMock.detectFoodInText("Test"));
         assertTrue(miscServiceMock.detectFoodInText("text").getAnnotations().size() == 1);
         verify(restTemplateMock, atLeastOnce()).exchange(anyString(), eq(HttpMethod.POST), any(), eq(DetectedFoodList.class));
     }
@@ -93,7 +93,7 @@ public class MiscServiceTest {
 
         when(restTemplateMock.getForObject(anyString(), eq(SiteContent.class))).thenReturn(siteContentSpy);
 
-        assertNotNull(miscServiceMock.searchSiteContent("test"));
+        assertNotNull(miscServiceMock.searchSiteContent("Test"));
         verify(restTemplateMock, atLeastOnce()).getForObject(anyString(), eq(SiteContent.class));
     }
 
@@ -104,7 +104,7 @@ public class MiscServiceTest {
 
         when(restTemplateMock.getForObject(anyString(), eq(VideoResults.class))).thenReturn(videoResultsSpy);
 
-        assertNotNull(miscServiceMock.searchFoodVideos("test", "test", "test", "test", 1));
+        assertNotNull(miscServiceMock.searchFoodVideos("Test", "Test", "Test", "Test", 1));
         verify(restTemplateMock, atLeastOnce()).getForObject(anyString(), eq(VideoResults.class));
     }
 
@@ -115,7 +115,7 @@ public class MiscServiceTest {
 
         when(restTemplateMock.getForObject(anyString(), eq(VideoResults.class))).thenReturn(videoResultsSpy);
 
-        assertNull(miscServiceMock.searchFoodVideos("test", "test", "test", "test", 1));
+        assertNull(miscServiceMock.searchFoodVideos("Test", "Test", "Test", "Test", 1));
         verify(restTemplateMock, atLeastOnce()).getForObject(anyString(), eq(VideoResults.class));
     }
 
@@ -145,7 +145,7 @@ public class MiscServiceTest {
 
     @Test
     public void encodeString_success() {
-        assertEquals("this+is+a+test", miscServiceMock.encodeString("this is a test"));
+        assertEquals("this+is+a+Test", miscServiceMock.encodeString("this is a Test"));
         assertEquals("spaces+should+be+filled+with+plus+symbols", miscServiceMock.encodeString("spaces should be filled with plus symbols"));
     }
 

@@ -44,11 +44,11 @@ public class MiscServiceImpl implements MiscService {
                 .toUriString();
 
         quickAnswerResult = restTemplate.getForObject(url, QuickAnswerResult.class);
-        if(quickAnswerResult.getAnswer() != null) {
+        if (quickAnswerResult.getAnswer() != null) {
             quickAnswerResult.setQuestion(question);
             LOGGER.info(quickAnswerResult.toString());
             return quickAnswerResult;
-        }else{
+        } else {
             return null;
         }
     }
@@ -71,10 +71,10 @@ public class MiscServiceImpl implements MiscService {
         ResponseEntity<DetectedFoodList> response = restTemplate.exchange(url, HttpMethod.POST, entity, DetectedFoodList.class);
         detectedFoodList = response.getBody();
 
-        if(!detectedFoodList.getAnnotations().isEmpty()){
+        if (!detectedFoodList.getAnnotations().isEmpty()) {
             LOGGER.info(detectedFoodList.toString());
             return detectedFoodList;
-        }else{
+        } else {
             return null;
         }
     }
@@ -85,9 +85,9 @@ public class MiscServiceImpl implements MiscService {
         String encodedQuery = encodeString(query);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/site/search")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("query", encodedQuery)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("query", encodedQuery)
+                .toUriString();
 
         siteContent = restTemplate.getForObject(url, SiteContent.class);
 
@@ -106,19 +106,19 @@ public class MiscServiceImpl implements MiscService {
         String encodedDiet = encodeString(diet);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("food/videos/search")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("query", encodedQuery)
-                                         .queryParam("type", encodedType)
-                                         .queryParam("cuisine", encodedCuisine)
-                                         .queryParam("diet", encodedDiet)
-                                         .queryParam("number", number)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("query", encodedQuery)
+                .queryParam("type", encodedType)
+                .queryParam("cuisine", encodedCuisine)
+                .queryParam("diet", encodedDiet)
+                .queryParam("number", number)
+                .toUriString();
 
         videoResults = restTemplate.getForObject(url, VideoResults.class);
-        if(videoResults.getTotalResults() != 0){
+        if (videoResults.getTotalResults() != 0) {
             LOGGER.info(videoResults.toString());
             return videoResults;
-        }else {
+        } else {
             return null;
         }
     }
@@ -126,8 +126,8 @@ public class MiscServiceImpl implements MiscService {
     @Override
     public TextResponse getRandomFoodJoke() {
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("food/jokes/random")
-                                         .queryParam("apiKey", key)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .toUriString();
 
         TextResponse joke = restTemplate.getForObject(url, TextResponse.class);
 

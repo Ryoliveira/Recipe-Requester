@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Menu Display Page</title>
+        <link type="text/css" rel="stylesheet" href="/css/style.css">
+        <div th:include="fragments/required-tags :: boot-strap-required"/>
+    </head>
+    <body>
+
+        <div th:include="fragments/nav :: nav"/>
+
+        <div class="center">
+
+            <div th:if="${menuItemResultList}">
+                <div th:each="menuItem : ${menuItemResultList.menuItemList}">
+                    <p th:text="${menuItem.title}"></p>
+                    <p th:text="${menuItem.restaurantChain}"></p>
+                    <img th:src="${menuItem.image}">
+                    <br>
+                    <br>
+                    <a th:href="@{/menu/menu-item/nutrition/{id}(id = ${menuItem.id})}" class="btn btn-primary">
+                        Nutrition Info
+                    </a>
+                    <hr>
+                </div>
+            </div>
+
+            <div th:if="${AutoMenuItemResultList}">
+                <div th:each="menuItem :  ${AutoMenuItemResultList.results}">
+                    <h3>Title:
+                        <span th:text="${menuItem.title}"></span>
+                    </h3>
+                    <br>
+                    <a th:href="@{/menu/menu-item/nutrition/{id}(id = ${menuItem.id})}" class="btn btn-primary">
+                        Nutrition Info
+                    </a>
+                </div>
+            </div>
+
+            <div th:if="${menuItemInfo}">
+                <div>
+                    <h3 th:text="${menuItemInfo.title}"></h3>
+                    <h5 if="${menuItemInfo.restaurantChain}">Restaurant:
+                        <span th:text="${menuItemInfo.restaurantChain}"></span>
+                    </h5>
+                    <img th:src="${menuItemInfo.images.get(1)}">
+                    <hr>
+                    <h4>
+                        <u>Nutrition information</u>
+                    </h4>
+                    <div th:if="${nutrient.amount != 0.0}"
+                         th:each="nutrient : ${menuItemInfo.nutritionInfo.nutrientsList}">
+                        <h5>Nutrient:
+                            <span th:text="${nutrient.title}"></span>
+                        </h5>
+                        <h5>Amount:
+                            <span th:text="${nutrient.amount}"></span>
+                            <span th:text="${nutrient.unit}"></span>
+                        </h5>
+                        <h5>Amount of daily percent filled:<span th:text="${nutrient.percentOfDailyNeeds}"></span>&#37;
+                        </h5>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </body>
+</html>

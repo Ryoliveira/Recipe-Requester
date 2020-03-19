@@ -11,7 +11,7 @@
 
 <div th:include="fragments/nav :: nav"/>
 
-<div class="center wine-display-bg wine-display-text" >
+<div class="center wine-display-bg wine-display-text">
     <div id="Dish Pairing" th:if="${pairing}">
         <table>
             <thead>
@@ -35,7 +35,8 @@
         <span th:text="${winePairing.pairingText}"></span>
         <br>
         <span>Paired Wines: </span>
-        <span th:each="wine, iterStat : ${winePairing.pairedWines}" th:text="!${iterStat.last} ? ${wine} + ', ' : ${wine}"></span>
+        <span th:each="wine, iterStat : ${winePairing.pairedWines}"
+              th:text="!${iterStat.last} ? ${wine} + ', ' : ${wine}"></span>
         <div th:each="product : ${winePairing.wineProductMatches}">
             <h1 th:text="${product.title}"></h1>
             <span><b>Description:</b> <span th:text="${product.description}"></span></span>
