@@ -13,15 +13,16 @@
 
 <div class="center wine-display-bg wine-display-text">
     <div id="Dish Pairing" th:if="${pairing}">
-        <table>
-            <thead>
-            <th><p th:text="${pairing.getWineName()}"></p></th>
-            </thead>
-            <tr th:each="dish : ${pairing.pairings}">
+        <h3 th:text="${pairing.getWineName()}"></h3>
+        <h5 th:text="${pairing.text}"></h5>
+        <table class="table table-dark table-sm table-striped w-75" align="center">
+           <th>
+               #
+           </th>
+            <th>Food Item</th>
+            <tr th:each="dish, iStat : ${pairing.pairings}">
+                <td th:text="${iStat.index} + 1"></td>
                 <td th:text="${dish}"></td>
-            </tr>
-            <tr>
-                <td th:text="${pairing.text}"></td>
             </tr>
         </table>
         <form th:action="@{/wine/dishes/search}">
@@ -34,9 +35,20 @@
         <br>
         <span th:text="${winePairing.pairingText}"></span>
         <br>
-        <span>Paired Wines: </span>
-        <span th:each="wine, iterStat : ${winePairing.pairedWines}"
-              th:text="!${iterStat.last} ? ${wine} + ', ' : ${wine}"></span>
+        <table align="center" class="table table-dark table-striped table-sm w-75">
+            <th>
+                #
+            </th>
+            <th>
+                Paired Wines
+            </th>
+            <tr th:each="wine, iStat : ${winePairing.pairedWines}">
+            <td th:text="${iStat.index} + 1" >
+
+            </td>
+            <td th:text="${wine}"></td>
+            </tr>
+        </table>
         <div th:each="product : ${winePairing.wineProductMatches}">
             <h1 th:text="${product.title}"></h1>
             <span><b>Description:</b> <span th:text="${product.description}"></span></span>
@@ -58,7 +70,7 @@
             <hr>
             <h1 th:text="${product.title}"></h1>
             <span><b><u>Description</u></b></span>
-            <p align="justify" th:text="${product.description}"></p>
+            <p align="center" width="75%" th:text="${product.description}"></p>
             <br>
             <img th:src="${product.imageUrl}">
             <br>

@@ -11,62 +11,80 @@
         <div th:include="fragments/nav :: nav"/>
 
         <div class="center">
-
-            <div th:if="${menuItemResultList}">
-                <div th:each="menuItem : ${menuItemResultList.menuItemList}">
-                    <p th:text="${menuItem.title}"></p>
-                    <p th:text="${menuItem.restaurantChain}"></p>
-                    <img th:src="${menuItem.image}">
-                    <br>
-                    <br>
-                    <a th:href="@{/menu/menu-item/nutrition/{id}(id = ${menuItem.id})}" class="btn btn-primary">
-                        Nutrition Info
-                    </a>
-                    <hr>
-                </div>
-            </div>
-
-            <div th:if="${AutoMenuItemResultList}">
-                <div th:each="menuItem :  ${AutoMenuItemResultList.results}">
-                    <h3>Title:
-                        <span th:text="${menuItem.title}"></span>
-                    </h3>
-                    <br>
-                    <a th:href="@{/menu/menu-item/nutrition/{id}(id = ${menuItem.id})}" class="btn btn-primary">
-                        Nutrition Info
-                    </a>
-                </div>
-            </div>
-
+            <table th:if="${menuItemResultList}" class="table table-dark table-striped">
+                <th>#</th>
+                <th>Menu Item</th>
+                <th>Restaurant</th>
+                <th>Nutrition Info</th>
+                <tr th:each="menuItem, iStat : ${menuItemResultList.menuItemList}">
+                    <td th:text="${iStat.index} + 1"></td>
+                    <td th:text="${menuItem.title}"></td>
+                    <td th:text="${menuItem.restaurantChain}"></td>
+                    <td>
+                        <a th:href="@{/menu/menu-item/nutrition/{id}(id = ${menuItem.id})}" class="btn btn-primary">
+                            Nutrition Info
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <table th:if="${AutoMenuItemResultList}" align="center" class="table table-dark table-striped">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Menu Item
+                    </th>
+                    <th>
+                        Nutrition info
+                    </th>
+                </tr>
+                <tr th:each="menuItem, iStat :  ${AutoMenuItemResultList.results}">
+                    <td th:text="${iStat.index} + 1"></td>
+                    <td th:text="${menuItem.title}" style="font-weight: bold;"></td>
+                    <td>
+                        <a th:href="@{/menu/menu-item/nutrition/{id}(id = ${menuItem.id})}" class="btn btn-primary">
+                            View Info
+                        </a>
+                    </td>
+                </tr>
+            </table>
             <div th:if="${menuItemInfo}">
-                <div>
-                    <h3 th:text="${menuItemInfo.title}"></h3>
-                    <h5 if="${menuItemInfo.restaurantChain}">Restaurant:
-                        <span th:text="${menuItemInfo.restaurantChain}"></span>
-                    </h5>
-                    <img th:src="${menuItemInfo.images.get(1)}">
-                    <hr>
-                    <h4>
-                        <u>Nutrition information</u>
-                    </h4>
-                    <div th:if="${nutrient.amount != 0.0}"
-                         th:each="nutrient : ${menuItemInfo.nutritionInfo.nutrientsList}">
-                        <h5>Nutrient:
-                            <span th:text="${nutrient.title}"></span>
-                        </h5>
-                        <h5>Amount:
-                            <span th:text="${nutrient.amount}"></span>
-                            <span th:text="${nutrient.unit}"></span>
-                        </h5>
-                        <h5>Amount of daily percent filled:<span th:text="${nutrient.percentOfDailyNeeds}"></span>&#37;
-                        </h5>
-                        <hr>
-                    </div>
-                </div>
+                <h3 th:text="${menuItemInfo.title}"></h3>
+                <h5 if="${menuItemInfo.restaurantChain}" th:text="${menuItemInfo.restaurantChain}">
+                </h5>
+                <img th:src="${menuItemInfo.images.get(1)}">
+                <hr>
+                <h4>
+                    <u>Nutrition information</u>
+                </h4>
+                <table class="table table-dark table-striped" align="center">
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Nutrient
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            % of daily needs
+                        </th>
+                    </tr>
+                    <tr th:if="${nutrient.amount != 0.0}"
+                        th:each="nutrient, iStat : ${menuItemInfo.nutritionInfo.nutrientsList}">
+                        <td th:text="${iStat.index} + 1"></td>
+                        <td th:text="${nutrient.title}"></td>
+                        <td th:text="${nutrient.amount} + ${nutrient.unit}">
+                        </td>
+                        <td th:text="${nutrient.percentOfDailyNeeds}">
+                            <span>&#37;</span>
+                        </td>
+                    </tr>
+                </table>
             </div>
-
         </div>
-
-
     </body>
 </html>
