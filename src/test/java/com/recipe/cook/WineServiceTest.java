@@ -32,11 +32,10 @@ public class WineServiceTest {
     @Mock
     private RestTemplate restTemplateMock;
 
-    private String dummyUrl = "https://api.spoonacular.com";
 
     @BeforeEach
     public void setUrl() {
-        ReflectionTestUtils.setField(wineServiceMock, "spoonacularUrl", dummyUrl);
+        ReflectionTestUtils.setField(wineServiceMock, "spoonacularUrl", "https://api.spoonacular.com");
     }
 
     @Test

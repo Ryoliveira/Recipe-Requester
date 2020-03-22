@@ -9,7 +9,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuItemAutoCompleteResultList {
+public class AutoMenuItemResultList {
 
     private List<MenuItem> results;
 

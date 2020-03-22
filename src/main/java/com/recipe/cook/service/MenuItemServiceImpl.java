@@ -1,7 +1,7 @@
 package com.recipe.cook.service;
 
 import com.recipe.cook.entity.MenuItem;
-import com.recipe.cook.entity.MenuItemAutoCompleteResultList;
+import com.recipe.cook.entity.AutoMenuItemResultList;
 import com.recipe.cook.entity.MenuItemResultList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public class MenuItemServiceImpl implements MenuItemService {
     }
 
     @Override
-    public MenuItemAutoCompleteResultList searchMenuItemsAutoComplete(String query, int numOfResults) {
+    public AutoMenuItemResultList searchMenuItemsAutoComplete(String query, int numOfResults) {
         String encodedQuery = encodeString(query);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/menuItems/suggest")
@@ -68,7 +68,7 @@ public class MenuItemServiceImpl implements MenuItemService {
                 .queryParam("number", numOfResults)
                 .toUriString();
 
-        MenuItemAutoCompleteResultList menuItemResultList = restTemplate.getForObject(url, MenuItemAutoCompleteResultList.class);
+        AutoMenuItemResultList menuItemResultList = restTemplate.getForObject(url, AutoMenuItemResultList.class);
 
         LOGGER.info(menuItemResultList.toString());
 

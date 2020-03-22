@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class MiscControllerTests {
 
-    MockMvc mockMvc;
+    MockMvc miscControllerMock;
 
     @Mock
     MiscServiceImpl miscServiceMock;
@@ -30,12 +30,12 @@ public class MiscControllerTests {
     @Before
     public void setUp() {
         MiscController miscController = new MiscController(miscServiceMock);
-        mockMvc = MockMvcBuilders.standaloneSetup(miscController).build();
+        miscControllerMock = MockMvcBuilders.standaloneSetup(miscController).build();
     }
 
     @Test
     public void getQuickAnswerPage_success() throws Exception {
-        mockMvc.perform(get("/misc/quick-answer/ask"))
+        miscControllerMock.perform(get("/misc/quick-answer/ask"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("quickAnswerSearch", true))
                 .andExpect(view().name("misc/misc-home"))
@@ -48,7 +48,7 @@ public class MiscControllerTests {
         QuickAnswerResult quickAnswerResultMock = mock(QuickAnswerResult.class);
         when(miscServiceMock.getQuickAnswer(anyString())).thenReturn(quickAnswerResultMock);
 
-        mockMvc.perform(get("/misc/quick-answer/answer")
+        miscControllerMock.perform(get("/misc/quick-answer/answer")
                 .param("question", "Test"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("answer", quickAnswerResultMock))
@@ -61,7 +61,7 @@ public class MiscControllerTests {
     public void getQuickAnswerResults_redirect() throws Exception {
         when(miscServiceMock.getQuickAnswer(anyString())).thenReturn(null);
 
-        mockMvc.perform(get("/misc/quick-answer/answer")
+        miscControllerMock.perform(get("/misc/quick-answer/answer")
                 .param("question", "Test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("answerNotFound", "No answer could be found."))
@@ -72,7 +72,7 @@ public class MiscControllerTests {
 
     @Test
     public void getDetectFoodPage_success() throws Exception {
-        mockMvc.perform(get("/misc/detect-food/analyzer-page"))
+        miscControllerMock.perform(get("/misc/detect-food/analyzer-page"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("analyzeText", true))
                 .andExpect(view().name("misc/misc-home"))
@@ -85,7 +85,7 @@ public class MiscControllerTests {
         DetectedFoodList detectedFoodListMock = mock(DetectedFoodList.class);
         when(miscServiceMock.detectFoodInText(anyString())).thenReturn(detectedFoodListMock);
 
-        mockMvc.perform(get("/misc/detect-food/analyze")
+        miscControllerMock.perform(get("/misc/detect-food/analyze")
                 .param("text", "Test"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("detectedFoodList", detectedFoodListMock))
@@ -98,7 +98,7 @@ public class MiscControllerTests {
     public void getDetectFoodResult_redirect() throws Exception {
         when(miscServiceMock.detectFoodInText(anyString())).thenReturn(null);
 
-        mockMvc.perform(get("/misc/detect-food/analyze")
+        miscControllerMock.perform(get("/misc/detect-food/analyze")
                 .param("text", "Test"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("NoDetectedFood", "No food items were detected in the text given"))
@@ -109,7 +109,7 @@ public class MiscControllerTests {
 
     @Test
     public void getSiteSearchPage_success() throws Exception {
-        mockMvc.perform(get("/misc/site-search/search"))
+        miscControllerMock.perform(get("/misc/site-search/search"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("siteSearch", true))
                 .andExpect(view().name("misc/misc-home"))
@@ -123,7 +123,7 @@ public class MiscControllerTests {
 
         when(miscServiceMock.searchSiteContent(anyString())).thenReturn(siteContentMock);
 
-        mockMvc.perform(get("/misc/site-search/results")
+        miscControllerMock.perform(get("/misc/site-search/results")
                 .param("query", "Test"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("siteContent", siteContentMock))
@@ -135,7 +135,7 @@ public class MiscControllerTests {
 
     @Test
     public void getFoodVideoSearchPage_success() throws Exception {
-        mockMvc.perform(get("/misc/food-video/search"))
+        miscControllerMock.perform(get("/misc/food-video/search"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("foodVideoSearch", true))
                 .andExpect(view().name("misc/misc-home"))
@@ -148,7 +148,7 @@ public class MiscControllerTests {
         VideoResults videoResults = mock(VideoResults.class);
         when(miscServiceMock.searchFoodVideos(anyString(), anyString(), anyString(), anyString(), anyInt())).thenReturn(videoResults);
 
-        mockMvc.perform(get("/misc/food-video/results")
+        miscControllerMock.perform(get("/misc/food-video/results")
                 .param("query", "Test")
                 .param("type", "Test")
                 .param("cuisine", "Test")
@@ -165,7 +165,7 @@ public class MiscControllerTests {
     public void getFoodVideoResults_redirect() throws Exception {
         when(miscServiceMock.searchFoodVideos(anyString(), anyString(), anyString(), anyString(), anyInt())).thenReturn(null);
 
-        mockMvc.perform(get("/misc/food-video/results")
+        miscControllerMock.perform(get("/misc/food-video/results")
                 .param("query", "Test")
                 .param("type", "Test")
                 .param("cuisine", "Test")
@@ -183,7 +183,7 @@ public class MiscControllerTests {
         TextResponse textResponseMock = mock(TextResponse.class);
         when(miscServiceMock.getRandomFoodJoke()).thenReturn(textResponseMock);
 
-        mockMvc.perform(get("/misc/random/joke"))
+        miscControllerMock.perform(get("/misc/random/joke"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("joke", textResponseMock))
                 .andExpect(view().name("misc/misc-display"));
@@ -194,7 +194,7 @@ public class MiscControllerTests {
         TextResponse textResponseMock = mock(TextResponse.class);
         when(miscServiceMock.getRandomFoodTrivia()).thenReturn(textResponseMock);
 
-        mockMvc.perform(get("/misc/random/trivia"))
+        miscControllerMock.perform(get("/misc/random/trivia"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("trivia", textResponseMock))
                 .andExpect(view().name("misc/misc-display"));

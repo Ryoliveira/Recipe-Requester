@@ -1,7 +1,7 @@
 package com.recipe.cook.controller;
 
 import com.recipe.cook.entity.MenuItem;
-import com.recipe.cook.entity.MenuItemAutoCompleteResultList;
+import com.recipe.cook.entity.AutoMenuItemResultList;
 import com.recipe.cook.entity.MenuItemResultList;
 import com.recipe.cook.service.MenuItemService;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class MenuItemController {
 
     final Logger LOGGER = LoggerFactory.getLogger(MenuItemController.class);
 
-    MenuItemService menuItemService;
+    private MenuItemService menuItemService;
 
     @Autowired
     public MenuItemController(MenuItemService menuItemService) {
@@ -48,7 +48,7 @@ public class MenuItemController {
             return "menu/menu-display";
         } else {
             String msg = "No items found for current request";
-            redirectAttributes.addFlashAttribute("MenuItemsNotFound", msg);
+            redirectAttributes.addFlashAttribute("menuItemsNotFound", msg);
             return "redirect:/menu/menu-item/search";
         }
     }
@@ -64,7 +64,7 @@ public class MenuItemController {
                                                        @RequestParam("number") int numOfResults,
                                                        Model theModel,
                                                        RedirectAttributes redirectAttributes) {
-        MenuItemAutoCompleteResultList menuItemResultList;
+        AutoMenuItemResultList menuItemResultList;
 
         if ((menuItemResultList = menuItemService.searchMenuItemsAutoComplete(query, numOfResults)) != null) {
             theModel.addAttribute("AutoMenuItemResultList", menuItemResultList);
@@ -77,7 +77,7 @@ public class MenuItemController {
     }
 
     @GetMapping("/menu-item/nutrition/{id}")
-    public String getMenuItemNutrionInfo(@PathVariable("id") int itemId,
+    public String getMenuItemNutritionInfo(@PathVariable("id") int itemId,
                                          Model theModel) {
         MenuItem menuItem = menuItemService.getMenuItemInfo(itemId);
         theModel.addAttribute("menuItemInfo", menuItem);

@@ -31,11 +31,10 @@ public class MiscServiceTest {
     @Mock
     private RestTemplate restTemplateMock;
 
-    private String dummyUrl = "https://api.spoonacular.com";
 
     @BeforeEach
     public void setUrl() {
-        ReflectionTestUtils.setField(miscServiceMock, "spoonacularUrl", dummyUrl);
+        ReflectionTestUtils.setField(miscServiceMock, "spoonacularUrl", "https://api.spoonacular.com");
     }
 
     @Test

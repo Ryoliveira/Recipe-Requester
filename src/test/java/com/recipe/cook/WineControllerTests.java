@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class WineControllerTests {
 
-    MockMvc wineMvc;
+    MockMvc wineControllerMock;
 
     @Mock
     WineServiceImpl wineService;
@@ -32,14 +32,14 @@ public class WineControllerTests {
     @Before
     public void setUp() {
         final WineController wineController = new WineController(wineService);
-        wineMvc = MockMvcBuilders.standaloneSetup(wineController).build();
+        wineControllerMock = MockMvcBuilders.standaloneSetup(wineController).build();
     }
 
     @Test
     @Ignore
     public void wineHomePage() throws Exception {
 
-        wineMvc.perform(get("/wine/home"))
+        wineControllerMock.perform(get("/wine/home"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("wine/wine-home"))
                 .andDo(MockMvcResultHandlers.print())
@@ -49,7 +49,7 @@ public class WineControllerTests {
 
     @Test
     public void getDishPairingSearchPage() throws Exception {
-        wineMvc.perform(get("/wine/dishes/search"))
+        wineControllerMock.perform(get("/wine/dishes/search"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("dishPairingSearch", true))
                 .andExpect(view().name("wine/wine-home"))
@@ -62,7 +62,7 @@ public class WineControllerTests {
         DishPairing pairingMock = mock(DishPairing.class);
         when(wineService.getDishPairing(anyString())).thenReturn(pairingMock);
 
-        wineMvc.perform(get("/wine/dishes/results")
+        wineControllerMock.perform(get("/wine/dishes/results")
                 .param("wineName", anyString()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("pairing", pairingMock))
@@ -77,7 +77,7 @@ public class WineControllerTests {
     public void getDishPairingResults_NotFound_Redirect() throws Exception {
         when(wineService.getDishPairing(anyString())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/dishes/results")
+        wineControllerMock.perform(get("/wine/dishes/results")
                 .param("wineName", anyString()))
                 .andExpect(status().isFound())
                 .andExpect(status().is3xxRedirection())
@@ -91,7 +91,7 @@ public class WineControllerTests {
 
     @Test
     public void getWinePairingSearchPage() throws Exception {
-        wineMvc.perform(get("/wine/pairing/search"))
+        wineControllerMock.perform(get("/wine/pairing/search"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("winePairingSearch", true))
                 .andExpect(view().name("wine/wine-home"))
@@ -104,7 +104,7 @@ public class WineControllerTests {
         WinePairing winePairing = mock(WinePairing.class);
         when(wineService.getWinePairing(anyString(), anyInt())).thenReturn(winePairing);
 
-        wineMvc.perform(get("/wine/pairing/results")
+        wineControllerMock.perform(get("/wine/pairing/results")
                 .param("foodName", anyString())
                 .param("maxPrice", String.valueOf(anyInt())))
                 .andExpect(status().isOk())
@@ -121,7 +121,7 @@ public class WineControllerTests {
     public void getWinePairingResults_NotFound_Redirect() throws Exception {
         when(wineService.getWinePairing(anyString(), anyInt())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/pairing/results")
+        wineControllerMock.perform(get("/wine/pairing/results")
                 .param("foodName", anyString())
                 .param("maxPrice", String.valueOf(anyInt())))
                 .andExpect(status().is3xxRedirection())
@@ -135,7 +135,7 @@ public class WineControllerTests {
 
     @Test
     public void getWineRecommendationsSearchPage() throws Exception {
-        wineMvc.perform(get("/wine/recommendations/search"))
+        wineControllerMock.perform(get("/wine/recommendations/search"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("wineRecommendationSearch", true))
                 .andExpect(view().name("wine/wine-home"))
@@ -149,7 +149,7 @@ public class WineControllerTests {
         WineRecommendation wineRecommendation = mock(WineRecommendation.class);
         when(wineService.getWineRecommendation(anyString(), anyInt(), anyDouble(), anyInt())).thenReturn(wineRecommendation);
 
-        wineMvc.perform(get("/wine/recommendations/results")
+        wineControllerMock.perform(get("/wine/recommendations/results")
                 .param("wineName", anyString())
                 .param("maxPrice", String.valueOf(anyInt()))
                 .param("minRating", String.valueOf(anyDouble()))
@@ -167,7 +167,7 @@ public class WineControllerTests {
     public void getWineRecommendationsResults_NotFound_Redirect() throws Exception {
         when(wineService.getWineRecommendation(anyString(), anyInt(), anyDouble(), anyInt())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/recommendations/results")
+        wineControllerMock.perform(get("/wine/recommendations/results")
                 .param("wineName", anyString())
                 .param("maxPrice", String.valueOf(anyInt()))
                 .param("minRating", String.valueOf(anyDouble()))
@@ -183,7 +183,7 @@ public class WineControllerTests {
 
     @Test
     public void getWineDescriptionSearchPage() throws Exception {
-        wineMvc.perform(get("/wine/description/search"))
+        wineControllerMock.perform(get("/wine/description/search"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("wineDescriptionSearch", true))
                 .andExpect(view().name("wine/wine-home"))
@@ -198,7 +198,7 @@ public class WineControllerTests {
 
         when(wineService.getWineDescription(anyString())).thenReturn(wineDescription);
 
-        wineMvc.perform(get("/wine/description/result")
+        wineControllerMock.perform(get("/wine/description/result")
                 .param("wineName", anyString()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("wineDescription", wineDescription))
@@ -213,7 +213,7 @@ public class WineControllerTests {
     public void getWineDescriptionResult_NotFound_Redirect() throws Exception {
         when(wineService.getWineDescription(anyString())).thenReturn(null);
 
-        wineMvc.perform(get("/wine/description/result")
+        wineControllerMock.perform(get("/wine/description/result")
                 .param("wineName", anyString()))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("noDescFound", " not found."))
