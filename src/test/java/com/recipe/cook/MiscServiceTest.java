@@ -141,11 +141,4 @@ public class MiscServiceTest {
         assertEquals("Starbucks donates 100% of its leftover food in partnership with the nonprofit Feeding America.\n", miscServiceMock.getRandomFoodTrivia().getText());
         verify(restTemplateMock, atLeastOnce()).getForObject(anyString(), eq(TextResponse.class));
     }
-
-    @Test
-    public void encodeString_success() {
-        assertEquals("this+is+a+Test", miscServiceMock.encodeString("this is a Test"));
-        assertEquals("spaces+should+be+filled+with+plus+symbols", miscServiceMock.encodeString("spaces should be filled with plus symbols"));
-    }
-
 }

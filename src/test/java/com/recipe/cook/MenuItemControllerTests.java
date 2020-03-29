@@ -2,9 +2,9 @@ package com.recipe.cook;
 
 
 import com.recipe.cook.controller.MenuItemController;
-import com.recipe.cook.entity.AutoMenuItemResultList;
+import com.recipe.cook.entity.AutoCompleteResults;
 import com.recipe.cook.entity.MenuItem;
-import com.recipe.cook.entity.MenuItemResultList;
+import com.recipe.cook.entity.MenuItemResults;
 import com.recipe.cook.service.MenuItemServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,8 +48,8 @@ public class MenuItemControllerTests {
 
     @Test
     public void getMenuItemSearchResults_success() throws Exception {
-        MenuItemResultList menuItemResultListMock = mock(MenuItemResultList.class);
-        when(menuItemServiceMock.searchMenuItems(anyString(), anyInt(), anyInt(), anyInt())).thenReturn(menuItemResultListMock);
+        MenuItemResults menuItemResultsMock = mock(MenuItemResults.class);
+        when(menuItemServiceMock.searchMenuItems(anyString(), anyInt(), anyInt(), anyInt())).thenReturn(menuItemResultsMock);
 
 
         menuItemControllerMock.perform(get("/menu/menu-item/results")
@@ -57,7 +58,7 @@ public class MenuItemControllerTests {
                 .param("maxCalories", String.valueOf(anyInt()))
                 .param("number", String.valueOf(anyInt())))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("menuItemResultList", menuItemResultListMock))
+                .andExpect(model().attribute("menuItemResults", menuItemResultsMock))
                 .andExpect(view().name("menu/menu-display"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -95,14 +96,14 @@ public class MenuItemControllerTests {
 
     @Test
     public void getAutoCompleteSearchMenuItemResults_success() throws Exception {
-        AutoMenuItemResultList autoMenuItemResultListMock = mock(AutoMenuItemResultList.class);
-        when(menuItemServiceMock.searchMenuItemsAutoComplete(anyString(), anyInt())).thenReturn(autoMenuItemResultListMock);
+        AutoCompleteResults autoCompleteResultsMock = mock(AutoCompleteResults.class);
+        when(menuItemServiceMock.searchMenuItemsAutoComplete(anyString(), anyInt())).thenReturn(autoCompleteResultsMock);
 
         menuItemControllerMock.perform(get("/menu/auto-complete/results")
                 .param("query", anyString())
                 .param("number", String.valueOf(anyInt())))
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("AutoMenuItemResultList", autoMenuItemResultListMock))
+                .andExpect(model().attribute("AutoCompleteResults", autoCompleteResultsMock))
                 .andExpect(view().name("menu/menu-display"))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

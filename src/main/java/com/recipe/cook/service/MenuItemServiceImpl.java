@@ -1,8 +1,8 @@
 package com.recipe.cook.service;
 
+import com.recipe.cook.entity.AutoCompleteResults;
 import com.recipe.cook.entity.MenuItem;
-import com.recipe.cook.entity.AutoMenuItemResultList;
-import com.recipe.cook.entity.MenuItemResultList;
+import com.recipe.cook.entity.MenuItemResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class MenuItemServiceImpl implements MenuItemService {
 
 
     @Override
-    public MenuItemResultList searchMenuItems(String query, int minCalories, int maxCalories, int numOfResults) {
+    public MenuItemResults searchMenuItems(String query, int minCalories, int maxCalories, int numOfResults) {
         String encodedQuery = encodeString(query);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/menuItems/search")
@@ -47,19 +47,19 @@ public class MenuItemServiceImpl implements MenuItemService {
                 .queryParam("number", numOfResults)
                 .toUriString();
 
-        MenuItemResultList menuItemResultList = restTemplate.getForObject(url, MenuItemResultList.class);
+        MenuItemResults menuItemResults = restTemplate.getForObject(url, MenuItemResults.class);
 
-        LOGGER.info(menuItemResultList.toString());
+        LOGGER.info(menuItemResults.toString());
 
-        if (menuItemResultList.getTotalMenuItems() == 0) {
+        if (menuItemResults.getTotalMenuItems() == 0) {
             return null;
         } else {
-            return menuItemResultList;
+            return menuItemResults;
         }
     }
 
     @Override
-    public AutoMenuItemResultList searchMenuItemsAutoComplete(String query, int numOfResults) {
+    public AutoCompleteResults searchMenuItemsAutoComplete(String query, int numOfResults) {
         String encodedQuery = encodeString(query);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/menuItems/suggest")
@@ -68,7 +68,7 @@ public class MenuItemServiceImpl implements MenuItemService {
                 .queryParam("number", numOfResults)
                 .toUriString();
 
-        AutoMenuItemResultList menuItemResultList = restTemplate.getForObject(url, AutoMenuItemResultList.class);
+        AutoCompleteResults menuItemResultList = restTemplate.getForObject(url, AutoCompleteResults.class);
 
         LOGGER.info(menuItemResultList.toString());
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Home</title>
+    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <div th:include="fragments/required-tags :: boot-strap-required"/>
+</head>
+<body>
+
+<div th:include="fragments/nav :: nav" />
+
+<div class="center">
+    <div th:if="${recipeSearch}">
+        <form th:action="@{/recipe/recipe-search/results}">
+            <label>Query: </label>
+            <input type="text" th:name="query" required><br>
+            <label>Cuisine: </label>
+            <select th:include="fragments/form-select-populate :: cuisine-type" th:name="cuisine" /><br>
+            <label>Diet: </label>
+            <select th:include="fragments/form-select-populate :: diet-type" th:name="diet"/><br>
+            <label>Intolerances</label>
+            <select th:include="fragments/form-select-populate :: intolerances" th:name="intolerances" multiple/><br>
+            <label>Number of Results:</label>
+            <input type="number" min="1" max="10" value="1" th:name="numOfResults"><br>
+            <label>Instructions Required: </label>
+            <input type="checkbox" th:name="instructionsRequired" value="true" /><br>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div th:if="${recipeWithIngredientsSearch}">
+        <form th:action="@{/recipe/ingredients/recipe-with-ingredients}">
+            <label>Ingredients</label>
+            <input type="text" placeholder="Ingredient, Ingredient, Ingredient" th:name="ingredients" required/><br>
+            <label>Number of results</label>
+            <input type="number" min="1" max="10" value="1" th:name="numOfResults"><br>
+            <label>Ignore Pantry Items: </label>
+            <input type="checkbox" th:name="ignorePantry" value="true">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div th:if="${autocompleteSearch}">
+        <form th:action="@{/recipe/autocomplete/results}">
+            <label>Query: </label>
+            <input type="text" th:name="query" required /><br>
+            <label>Number of Results: </label>
+            <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div th:if="${randomRecipeSearch}">
+        <form th:action="@{/recipe/random/results}">
+            <label>Recipe Tags: </label>
+            <input type="text" placeholder="Meal Type, Diet Type, etc" th:name="tags" required />
+            <br>
+            <label>Number of Results: </label>
+            <input type="number" min="1" max="10" value="1" th:name="numOfResults">
+            <br>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

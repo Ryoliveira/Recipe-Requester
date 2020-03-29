@@ -11,12 +11,12 @@
         <div th:include="fragments/nav :: nav"/>
 
         <div class="center">
-            <table th:if="${menuItemResultList}" class="table table-dark table-striped">
+            <table th:if="${menuItemResults}" class="table table-dark table-striped">
                 <th>#</th>
                 <th>Menu Item</th>
                 <th>Restaurant</th>
                 <th>Nutrition Info</th>
-                <tr th:each="menuItem, iStat : ${menuItemResultList.menuItemList}">
+                <tr th:each="menuItem, iStat : ${menuItemResults.menuItems}">
                     <td th:text="${iStat.index} + 1"></td>
                     <td th:text="${menuItem.title}"></td>
                     <td th:text="${menuItem.restaurantChain}"></td>
@@ -27,7 +27,7 @@
                     </td>
                 </tr>
             </table>
-            <table th:if="${AutoMenuItemResultList}" align="center" class="table table-dark table-striped">
+            <table th:if="${AutoCompleteResults}" align="center" class="table table-dark table-striped">
                 <tr>
                     <th>
                         #
@@ -39,7 +39,7 @@
                         Nutrition info
                     </th>
                 </tr>
-                <tr th:each="menuItem, iStat :  ${AutoMenuItemResultList.results}">
+                <tr th:each="menuItem, iStat :  ${AutoCompleteResults.results}">
                     <td th:text="${iStat.index} + 1"></td>
                     <td th:text="${menuItem.title}" style="font-weight: bold;"></td>
                     <td>

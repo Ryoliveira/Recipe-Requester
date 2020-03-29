@@ -1,14 +1,14 @@
 package com.recipe.cook.service;
 
+import com.recipe.cook.entity.AutoCompleteResults;
 import com.recipe.cook.entity.MenuItem;
-import com.recipe.cook.entity.AutoMenuItemResultList;
-import com.recipe.cook.entity.MenuItemResultList;
+import com.recipe.cook.entity.MenuItemResults;
 
 public interface MenuItemService {
 
-    MenuItemResultList searchMenuItems(String query, int minCalories, int maxCalories, int numOfResults);
+    MenuItemResults searchMenuItems(String query, int minCalories, int maxCalories, int numOfResults);
 
-    AutoMenuItemResultList searchMenuItemsAutoComplete(String query, int numOfResults);
+    AutoCompleteResults searchMenuItemsAutoComplete(String query, int numOfResults);
 
     MenuItem getMenuItemInfo(int itemId);
 

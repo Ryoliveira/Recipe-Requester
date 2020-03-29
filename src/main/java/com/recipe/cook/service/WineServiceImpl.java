@@ -18,6 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import static com.recipe.cook.util.Encoder.encodeString;
+
 @Service
 public class WineServiceImpl implements WineService {
 
@@ -64,13 +66,7 @@ public class WineServiceImpl implements WineService {
     @Override
     public WinePairing getWinePairing(String foodName, int maxPrice) {
         WinePairing winePairing;
-        String encodedFoodName = null;
-
-        try {
-            encodedFoodName = URLEncoder.encode(foodName, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        String encodedFoodName = encodeString(foodName);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/food/wine/pairing")
                 .queryParam("apiKey", key)

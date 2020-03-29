@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import static com.recipe.cook.util.Encoder.encodeString;
 
 @Service
 public class MiscServiceImpl implements MiscService {
@@ -149,13 +147,4 @@ public class MiscServiceImpl implements MiscService {
         return trivia;
     }
 
-    public String encodeString(String s) {
-        String encodedString = null;
-        try {
-            encodedString = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return encodedString;
-    }
 }

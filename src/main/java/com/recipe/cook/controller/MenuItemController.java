@@ -1,8 +1,8 @@
 package com.recipe.cook.controller;
 
+import com.recipe.cook.entity.AutoCompleteResults;
 import com.recipe.cook.entity.MenuItem;
-import com.recipe.cook.entity.AutoMenuItemResultList;
-import com.recipe.cook.entity.MenuItemResultList;
+import com.recipe.cook.entity.MenuItemResults;
 import com.recipe.cook.service.MenuItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +41,10 @@ public class MenuItemController {
                                            @RequestParam("number") int numOfResults,
                                            Model theModel,
                                            RedirectAttributes redirectAttributes) {
-        MenuItemResultList menuItemResultList;
+        MenuItemResults menuItemResults;
 
-        if ((menuItemResultList = menuItemService.searchMenuItems(query, minCalories, maxCalories, numOfResults)) != null) {
-            theModel.addAttribute("menuItemResultList", menuItemResultList);
+        if ((menuItemResults = menuItemService.searchMenuItems(query, minCalories, maxCalories, numOfResults)) != null) {
+            theModel.addAttribute("menuItemResults", menuItemResults);
             return "menu/menu-display";
         } else {
             String msg = "No items found for current request";
@@ -64,10 +64,10 @@ public class MenuItemController {
                                                        @RequestParam("number") int numOfResults,
                                                        Model theModel,
                                                        RedirectAttributes redirectAttributes) {
-        AutoMenuItemResultList menuItemResultList;
+        AutoCompleteResults menuItemResultList;
 
         if ((menuItemResultList = menuItemService.searchMenuItemsAutoComplete(query, numOfResults)) != null) {
-            theModel.addAttribute("AutoMenuItemResultList", menuItemResultList);
+            theModel.addAttribute("AutoCompleteResults", menuItemResultList);
             return "menu/menu-display";
         } else {
             String msg = "No menu items found";

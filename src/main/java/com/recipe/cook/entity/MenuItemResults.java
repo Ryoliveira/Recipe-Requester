@@ -10,10 +10,10 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuItemResultList {
+public class MenuItemResults {
 
     @JsonProperty("menuItems")
-    private List<MenuItem> menuItemList;
+    private List<MenuItem> menuItems;
 
     private int totalMenuItems;
 

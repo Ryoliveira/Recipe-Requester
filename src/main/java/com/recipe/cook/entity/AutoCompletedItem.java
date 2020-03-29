@@ -2,15 +2,14 @@ package com.recipe.cook.entity;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class AutoMenuItemResultList {
+public class AutoCompletedItem {
 
-    private List<MenuItem> results;
+    private int id;
 
+    private String title;
 }

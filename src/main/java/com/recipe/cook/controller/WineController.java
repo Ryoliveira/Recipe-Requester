@@ -74,8 +74,9 @@ public class WineController {
     }
 
     @GetMapping("/recommendations/search")
-    public String getWineRecommendationsSearchPage(Model theModel) {
+    public String getWineRecommendationsSearchPage(@RequestParam(value = "wineName", required = false, defaultValue = "") String wineName, Model theModel) {
         theModel.addAttribute("wineRecommendationSearch", true);
+        theModel.addAttribute("wineName", wineName);
         return "wine/wine-home";
     }
 
