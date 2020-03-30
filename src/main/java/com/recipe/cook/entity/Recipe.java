@@ -1,6 +1,5 @@
 package com.recipe.cook.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @Getter

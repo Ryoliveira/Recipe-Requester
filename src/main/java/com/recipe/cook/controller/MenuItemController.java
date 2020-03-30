@@ -78,7 +78,7 @@ public class MenuItemController {
 
     @GetMapping("/menu-item/nutrition/{id}")
     public String getMenuItemNutritionInfo(@PathVariable("id") int itemId,
-                                         Model theModel) {
+                                           Model theModel) {
         MenuItem menuItem = menuItemService.getMenuItemInfo(itemId);
         theModel.addAttribute("menuItemInfo", menuItem);
 

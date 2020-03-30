@@ -30,13 +30,14 @@ public class RecipeServiceImpl implements RecipeService {
     private String key;
 
     @Autowired
-    public RecipeServiceImpl(RestTemplate restTemplate){
+    public RecipeServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
 
     @Override
-    public RecipeResults searchRecipes(String query, String cuisine, String diet,  String intolerances, int numOfResults, boolean limitLicense, boolean instructionsRequired) {
+    public RecipeResults searchRecipes(String query, String cuisine, String diet, String intolerances,
+                                       int numOfResults, boolean limitLicense, boolean instructionsRequired) {
 
         String encodedQuery = encodeString(query);
         String encodedCuisine = encodeString(cuisine);
@@ -44,22 +45,22 @@ public class RecipeServiceImpl implements RecipeService {
         String encodedIntolerances = encodeString(intolerances);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/search")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("query", encodedQuery)
-                                         .queryParam("cuisine", encodedCuisine)
-                                         .queryParam("diet", encodedDiet)
-                                         .queryParam("intolerances", encodedIntolerances)
-                                         .queryParam("number", numOfResults)
-                                         .queryParam("limitLicense", limitLicense)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("query", encodedQuery)
+                .queryParam("cuisine", encodedCuisine)
+                .queryParam("diet", encodedDiet)
+                .queryParam("intolerances", encodedIntolerances)
+                .queryParam("number", numOfResults)
+                .queryParam("limitLicense", limitLicense)
+                .toUriString();
 
         RecipeResults recipeResults = restTemplate.getForObject(url, RecipeResults.class);
 
         LOGGER.info(recipeResults.toString());
 
-        if(!recipeResults.getRecipeList().isEmpty()){
+        if (!recipeResults.getRecipeList().isEmpty()) {
             return recipeResults;
-        }else{
+        } else {
             return null;
         }
     }
@@ -69,12 +70,12 @@ public class RecipeServiceImpl implements RecipeService {
         String encodedIngredients = encodeString(ingredients);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/findByIngredients")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("ingredients", ingredients)
-                                         .queryParam("number", numOfResults)
-                                         .queryParam("limitLicense", limitLicense)
-                                         .queryParam("ignorePantry", ignorePantry)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("ingredients", ingredients)
+                .queryParam("number", numOfResults)
+                .queryParam("limitLicense", limitLicense)
+                .queryParam("ignorePantry", ignorePantry)
+                .toUriString();
 
         ResponseEntity<List<RecipeWithIngredients>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeWithIngredients>>() {
         });
@@ -87,14 +88,14 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public  List<AutoCompletedItem> searchRecipesAutoComplete(String query, int numOfResults) {
+    public List<AutoCompletedItem> searchRecipesAutoComplete(String query, int numOfResults) {
         String encodedQuery = encodeString(query);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/autocomplete")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("query", encodedQuery)
-                                         .queryParam("number", numOfResults)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("query", encodedQuery)
+                .queryParam("number", numOfResults)
+                .toUriString();
 
         ResponseEntity<List<AutoCompletedItem>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<AutoCompletedItem>>() {
         });
@@ -103,9 +104,9 @@ public class RecipeServiceImpl implements RecipeService {
 
         LOGGER.info(autoCompletedItems.toString());
 
-        if(!autoCompletedItems.isEmpty()){
+        if (!autoCompletedItems.isEmpty()) {
             return autoCompletedItems;
-        }else{
+        } else {
             return null;
         }
     }
@@ -114,10 +115,10 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeInformation getRecipeInformation(int recipeId, boolean includeNutrition) {
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/" + recipeId + "/information")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("id", recipeId)
-                                         .queryParam("includeNutrition", includeNutrition)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("id", recipeId)
+                .queryParam("includeNutrition", includeNutrition)
+                .toUriString();
 
         RecipeInformation recipeInformation = restTemplate.getForObject(url, RecipeInformation.class);
 
@@ -130,12 +131,13 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeResults getSimilarRecipes(int recipeId, int numOfResults, boolean limitLicense) {
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/" + recipeId + "/similar")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("number", numOfResults)
-                                         .queryParam("limitLicense", limitLicense)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("number", numOfResults)
+                .queryParam("limitLicense", limitLicense)
+                .toUriString();
 
-        ResponseEntity<List<Recipe>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Recipe>>() {});
+        ResponseEntity<List<Recipe>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Recipe>>() {
+        });
 
         List<Recipe> recipeList = response.getBody();
 
@@ -144,9 +146,9 @@ public class RecipeServiceImpl implements RecipeService {
 
         LOGGER.info(recipeList.toString());
 
-        if(recipeList.size() != 0){
+        if (recipeList.size() != 0) {
             return recipeResults;
-        }else{
+        } else {
             return null;
         }
     }
@@ -156,19 +158,19 @@ public class RecipeServiceImpl implements RecipeService {
         String encodedTags = encodeString(tags);
 
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/random")
-                                         .queryParam("apiKey", key)
-                                         .queryParam("number", numOfResults)
-                                         .queryParam("limitLicense", limitLicense)
-                                         .toUriString();
+                .queryParam("apiKey", key)
+                .queryParam("number", numOfResults)
+                .queryParam("limitLicense", limitLicense)
+                .toUriString();
 
 
         RandomRecipeResults randomRecipeResults = restTemplate.getForObject(url, RandomRecipeResults.class);
 
         LOGGER.info(randomRecipeResults.toString());
 
-        if(!randomRecipeResults.getRecipes().isEmpty()){
+        if (!randomRecipeResults.getRecipes().isEmpty()) {
             return randomRecipeResults;
-        }else{
+        } else {
             return null;
         }
     }
@@ -179,7 +181,7 @@ public class RecipeServiceImpl implements RecipeService {
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/" + recipeId + "/summary")
                 .queryParam("apiKey", key)
                 .toUriString();
-        
+
         RecipeSummary recipeSummary = restTemplate.getForObject(url, RecipeSummary.class);
 
         LOGGER.info(recipeSummary.toString());

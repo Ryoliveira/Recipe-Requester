@@ -16,9 +16,9 @@
         <h3 th:text="${pairing.getWineName()}"></h3>
         <h5 th:text="${pairing.text}"></h5>
         <table class="table table-dark table-sm table-striped w-75" align="center">
-           <th>
-               #
-           </th>
+            <th>
+                #
+            </th>
             <th>Food Item</th>
             <tr th:each="dish, iStat : ${pairing.pairings}">
                 <td th:text="${iStat.index} + 1"></td>
@@ -43,10 +43,10 @@
                 Paired Wines
             </th>
             <tr th:each="wine, iStat : ${winePairing.pairedWines}">
-            <td th:text="${iStat.index} + 1" >
+                <td th:text="${iStat.index} + 1">
 
-            </td>
-            <td th:text="${wine}"></td>
+                </td>
+                <td th:text="${wine}"></td>
             </tr>
         </table>
         <div th:each="product : ${winePairing.wineProductMatches}">

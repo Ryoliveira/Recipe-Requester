@@ -66,15 +66,15 @@ public class RecipeController {
     @GetMapping("/ingredients/recipe-with-ingredients")
     public String getRecipeWithIngredients(@RequestParam("ingredients") String ingredients,
                                            @RequestParam("numOfResults") int numOfResults,
-                                           @RequestParam(value = "ignorePantry", required = false, defaultValue = "false") boolean ignorePantry ,
+                                           @RequestParam(value = "ignorePantry", required = false, defaultValue = "false") boolean ignorePantry,
                                            Model theModel,
                                            RedirectAttributes redirectAttributes) {
 
-        List<RecipeWithIngredients> recipeWithIngredients;
+        List<RecipeWithIngredients> recipesWithIngredientsList;
 
-        if ((recipeWithIngredients = recipeService.searchRecipesByIngredient(ingredients, numOfResults, true,
+        if ((recipesWithIngredientsList = recipeService.searchRecipesByIngredient(ingredients, numOfResults, true,
                 ignorePantry)) != null) {
-            theModel.addAttribute("recipeWithIngredients", recipeWithIngredients);
+            theModel.addAttribute("recipesWithIngredientsList", recipesWithIngredientsList);
             return "recipe/recipe-display";
         } else {
             String msg = "No recipe found with those settings";
@@ -125,7 +125,7 @@ public class RecipeController {
     }
 
     @GetMapping("/random/search")
-    public String getRandomRecipesSearchPage(Model theModel){
+    public String getRandomRecipesSearchPage(Model theModel) {
         theModel.addAttribute("randomRecipeSearch", true);
         return "recipe/recipe-home";
     }
@@ -138,10 +138,10 @@ public class RecipeController {
 
         RandomRecipeResults randomRecipeResults;
 
-        if((randomRecipeResults = recipeService.getRandomRecipes(true, tags, numOfResults)) != null){
+        if ((randomRecipeResults = recipeService.getRandomRecipes(true, tags, numOfResults)) != null) {
             theModel.addAttribute("randomRecipeResults", randomRecipeResults);
             return "recipe/recipe-display";
-        }else{
+        } else {
             String msg = "No recipes found with given tags";
             redirectAttributes.addFlashAttribute("noRecipeFound", msg);
             return "redirect:/recipe/random/results";

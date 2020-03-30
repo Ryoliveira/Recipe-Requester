@@ -35,12 +35,12 @@ public class MenuItemServiceTests {
 
 
     @BeforeEach
-    public void setUrl(){
+    public void setUrl() {
         ReflectionTestUtils.setField(menuItemServiceMock, "spoonacularUrl", "https://api.spoonacular.com");
     }
 
     @Test
-    public void searchMenuItems_Success(){
+    public void searchMenuItems_Success() {
         MenuItemResults menuItemResultsSpy = spy(MenuItemResults.class);
         menuItemResultsSpy.setTotalMenuItems(1);
 
@@ -51,7 +51,7 @@ public class MenuItemServiceTests {
     }
 
     @Test
-    public void searchMenuItems_fail(){
+    public void searchMenuItems_fail() {
         MenuItemResults menuItemResultsSpy = spy(MenuItemResults.class);
         menuItemResultsSpy.setTotalMenuItems(0);
 
@@ -62,7 +62,7 @@ public class MenuItemServiceTests {
     }
 
     @Test
-    public void searchMenuItemsAutoComplete_success(){
+    public void searchMenuItemsAutoComplete_success() {
         AutoCompleteResults autoCompleteResultsSpy = spy(AutoCompleteResults.class);
         List<AutoCompletedItem> menuItemList = new ArrayList<>();
         menuItemList.add(new AutoCompletedItem());
@@ -75,7 +75,7 @@ public class MenuItemServiceTests {
     }
 
     @Test
-    public void searchMenuItemsAutoComplete_fail(){
+    public void searchMenuItemsAutoComplete_fail() {
         AutoCompleteResults autoCompleteResultsSpy = spy(AutoCompleteResults.class);
         List<AutoCompletedItem> menuItemList = new ArrayList<>();
         autoCompleteResultsSpy.setResults(menuItemList);
@@ -87,7 +87,7 @@ public class MenuItemServiceTests {
     }
 
     @Test
-    public void getMenuItemInfo_success(){
+    public void getMenuItemInfo_success() {
         MenuItem menuItemMock = mock(MenuItem.class);
 
         when(restTemplateMock.getForObject(anyString(), eq(MenuItem.class))).thenReturn(menuItemMock);

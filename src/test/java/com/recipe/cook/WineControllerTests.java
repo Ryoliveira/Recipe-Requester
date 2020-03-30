@@ -7,7 +7,6 @@ import com.recipe.cook.entity.WinePairing;
 import com.recipe.cook.entity.WineRecommendation;
 import com.recipe.cook.service.WineServiceImpl;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -35,17 +34,6 @@ public class WineControllerTests {
         wineControllerMock = MockMvcBuilders.standaloneSetup(wineController).build();
     }
 
-    @Test
-    @Ignore
-    public void wineHomePage() throws Exception {
-
-        wineControllerMock.perform(get("/wine/home"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("wine/wine-home"))
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-
-    }
 
     @Test
     public void getDishPairingSearchPage() throws Exception {

@@ -24,5 +24,4 @@ public class Ingredient {
     private String image;
 
 
-
 }

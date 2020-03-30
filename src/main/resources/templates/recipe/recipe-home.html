@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Recipe Home</title>
-    <link type="text/css" rel="stylesheet" href="/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/css/style.css"/>
     <div th:include="fragments/required-tags :: boot-strap-required"/>
 </head>
 <body>
 
-<div th:include="fragments/nav :: nav" />
+<div th:include="fragments/nav :: nav"/>
 
 <div class="center">
     <div th:if="${recipeSearch}">
@@ -16,7 +16,7 @@
             <label>Query: </label>
             <input type="text" th:name="query" required><br>
             <label>Cuisine: </label>
-            <select th:include="fragments/form-select-populate :: cuisine-type" th:name="cuisine" /><br>
+            <select th:include="fragments/form-select-populate :: cuisine-type" th:name="cuisine"/><br>
             <label>Diet: </label>
             <select th:include="fragments/form-select-populate :: diet-type" th:name="diet"/><br>
             <label>Intolerances</label>
@@ -24,7 +24,7 @@
             <label>Number of Results:</label>
             <input type="number" min="1" max="10" value="1" th:name="numOfResults"><br>
             <label>Instructions Required: </label>
-            <input type="checkbox" th:name="instructionsRequired" value="true" /><br>
+            <input type="checkbox" th:name="instructionsRequired" value="true"/><br>
             <input type="submit" value="Search">
         </form>
     </div>
@@ -42,7 +42,7 @@
     <div th:if="${autocompleteSearch}">
         <form th:action="@{/recipe/autocomplete/results}">
             <label>Query: </label>
-            <input type="text" th:name="query" required /><br>
+            <input type="text" th:name="query" required/><br>
             <label>Number of Results: </label>
             <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
             <input type="submit" value="Search">
@@ -51,7 +51,7 @@
     <div th:if="${randomRecipeSearch}">
         <form th:action="@{/recipe/random/results}">
             <label>Recipe Tags: </label>
-            <input type="text" placeholder="Meal Type, Diet Type, etc" th:name="tags" required />
+            <input type="text" placeholder="Meal Type, Diet Type, etc" th:name="tags" required/>
             <br>
             <label>Number of Results: </label>
             <input type="number" min="1" max="10" value="1" th:name="numOfResults">

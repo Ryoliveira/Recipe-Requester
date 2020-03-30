@@ -31,7 +31,7 @@ public class MenuItemControllerTests {
     MenuItemServiceImpl menuItemServiceMock;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MenuItemController menuItemController = new MenuItemController(menuItemServiceMock);
         menuItemControllerMock = MockMvcBuilders.standaloneSetup(menuItemController).build();
     }
@@ -39,11 +39,11 @@ public class MenuItemControllerTests {
     @Test
     public void getSearchMenuItemPage_success() throws Exception {
         menuItemControllerMock.perform(get("/menu/menu-item/search"))
-                              .andExpect(status().isOk())
-                              .andExpect(model().attribute("menuItemSearch", true))
-                              .andExpect(view().name("menu/menu-home"))
-                              .andDo(MockMvcResultHandlers.print())
-                              .andReturn();
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("menuItemSearch", true))
+                .andExpect(view().name("menu/menu-home"))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
     }
 
     @Test
@@ -138,10 +138,6 @@ public class MenuItemControllerTests {
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }
-
-
-
-
 
 
 }
