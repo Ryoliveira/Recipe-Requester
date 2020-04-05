@@ -4,59 +4,101 @@
     <meta charset="UTF-8">
     <title>Recipe Home</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css"/>
-    <div th:include="fragments/required-tags :: boot-strap-required"/>
+    <div th:include="fragments/required-tags :: boot-strap-required"></div>
 </head>
-<body>
+<body class="main-bg">
 
-<div th:include="fragments/nav :: nav"/>
+<div th:include="fragments/nav :: nav"></div>
 
-<div class="center">
+<div class="center container-bg display-text">
     <div th:if="${recipeSearch}">
+        <h1>Search Recipes</h1>
         <form th:action="@{/recipe/recipe-search/results}">
-            <label>Query: </label>
-            <input type="text" th:name="query" required><br>
-            <label>Cuisine: </label>
-            <select th:include="fragments/form-select-populate :: cuisine-type" th:name="cuisine"/><br>
-            <label>Diet: </label>
-            <select th:include="fragments/form-select-populate :: diet-type" th:name="diet"/><br>
-            <label>Intolerances</label>
-            <select th:include="fragments/form-select-populate :: intolerances" th:name="intolerances" multiple/><br>
-            <label>Number of Results:</label>
-            <input type="number" min="1" max="10" value="1" th:name="numOfResults"><br>
-            <label>Instructions Required: </label>
-            <input type="checkbox" th:name="instructionsRequired" value="true"/><br>
-            <input type="submit" value="Search">
+            <div class="form-group">
+                <label for="queryInput1">Query: </label>
+                <input type="text" class="form-control" id="queryInput1" th:name="query" required>
+            </div>
+            <div class="form-group">
+                <label for="selectCuisine">Cuisine</label>
+                <select th:include="fragments/form-select-populate :: cuisine-type" class="form-control" id="selectCuisine" th:name="cuisine"></select>
+            </div>
+            <div class="form-group">
+                <label for="selectDiet">Diet</label>
+                <select th:include="fragments/form-select-populate :: diet-type" class="form-control" id="selectDiet" th:name="diet"></select>
+            </div>
+            <div class="form-group">
+                <label for="selectIntolerances">Intolerances</label>
+                <select th:include="fragments/form-select-populate :: intolerances" class="form-control" id="selectIntolerances" th:name="intolerances" multiple></select>
+            </div>
+            <div class="form-group">
+                <label for="numOfResults1">Number of Results:</label>
+                <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults1" th:name="numOfResults">
+            </div>
+            <div class="form-group">
+                <label for="instructionsRequiredCheck">Instructions Required: </label>
+                <input type="checkbox" th:name="instructionsRequired" class="align-self-end" id="instructionsRequiredCheck" value="true"/><br>
+            </div>
+            <div class="form-group col-md-1 offset-md-6">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+
         </form>
     </div>
     <div th:if="${recipeWithIngredientsSearch}">
+        <h1>Search By Ingredients</h1>
         <form th:action="@{/recipe/ingredients/recipe-with-ingredients}">
-            <label>Ingredients</label>
-            <input type="text" placeholder="Ingredient, Ingredient, Ingredient" th:name="ingredients" required/><br>
-            <label>Number of results</label>
-            <input type="number" min="1" max="10" value="1" th:name="numOfResults"><br>
-            <label>Ignore Pantry Items: </label>
-            <input type="checkbox" th:name="ignorePantry" value="true">
-            <input type="submit" value="Search">
+            <div class="form-group">
+                <label for="ingredientsInput">Ingredients</label>
+                <input type="text" placeholder="Enter Ingredients" class="form-control" id="ingredientsInput" th:name="ingredients" required/>
+                <small>e.g. Ingredient, Ingredient, Ingredient</small>
+            </div>
+           <div class="form-group">
+               <label for="numOfResults2" >Number of Results</label>
+               <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults2" th:name="numOfResults">
+           </div>
+            <div class="form-group">
+                <label for="ignorePantryItemsCheck">Ignore Pantry Items: </label>
+                <input type="checkbox" id="ignorePantryItemsCheck" th:name="ignorePantry" value="true">
+            </div>
+            <div class="form-group col-md-1 offset-md-6">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+
+
         </form>
     </div>
     <div th:if="${autocompleteSearch}">
+        <h1>Search Recipe AutoComplete</h1>
         <form th:action="@{/recipe/autocomplete/results}">
-            <label>Query: </label>
-            <input type="text" th:name="query" required/><br>
-            <label>Number of Results: </label>
-            <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
-            <input type="submit" value="Search">
+            <div class="form-group">
+                <label for="queryInput2">Query</label>
+                <input type="text" class="form-control" id="queryInput2" th:name="query" required/>
+            </div>
+            <div class="form-group">
+                <label for="numOfResults3">Number of Results: </label>
+                <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults3" th:name="numOfResults"/>
+            </div>
+            <div class="form-group col-md-1 offset-md-6">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
         </form>
     </div>
     <div th:if="${randomRecipeSearch}">
+        <h1>Random Recipe Search</h1>
         <form th:action="@{/recipe/random/results}">
-            <label>Recipe Tags: </label>
-            <input type="text" placeholder="Meal Type, Diet Type, etc" th:name="tags" required/>
-            <br>
-            <label>Number of Results: </label>
-            <input type="number" min="1" max="10" value="1" th:name="numOfResults">
-            <br>
-            <input type="submit" value="Search">
+            <div class="form-group">
+                <label for="recipeTagInput">Recipe Tags</label>
+                <input type="text"  class="form-control" id="recipeTagInput" placeholder="Enter Tags" th:name="tags" required/>
+                <small>e.g. Meal Type, Diet Type, etc.</small>
+            </div>
+            <div class="form-group">
+                <label for="numOfResults4">Number of Results</label>
+                <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults4" th:name="numOfResults">
+            </div>
+            <div class="form-group col-md-1 offset-md-6">
+                <button class="btn btn-primary">Search</button>
+            </div>
+
         </form>
     </div>
 </div>

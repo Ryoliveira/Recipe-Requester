@@ -1,33 +1,28 @@
 
 .center {
+          border-radius: 25px;
           margin: 0 auto;
-          width: 60%;
+          width: 40%;
           border: 3px solid #007bff;
           padding: 10px;
-          text-align:center
+}
+
+.main-bg{
+    background-image: url(/images/main/checkered-pattern.png);
+    background-color: #2EC4B6;
+}
+
+.container-bg{
+    background-image: url(/images/main/light-mesh.png);
+    background-color: #B8D8D8;
 }
 
 
-.wine-display-bg{
-        background-color: #7790ba
+.display-text{
+        color: #26547C;
 }
 
-.wine-display-text{
-        color: #b7d1eb
+h1 {
+    text-align:center
 }
 
-.wine-bg{
-        background-image: url(/images/wine/Wine-Cellar.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
-}
-
-.misc-bg{
-        background-image: url(/images/misc/vintage-restaurant.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
-}
-
-.misc-display-bg{
-    background-color: #F6B71C
-}

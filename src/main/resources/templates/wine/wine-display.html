@@ -7,11 +7,11 @@
     <div th:include="fragments/required-tags :: boot-strap-required"/>
 
 </head>
-<body class="wine-bg">
+<body class="main-bg">
 
 <div th:include="fragments/nav :: nav"/>
 
-<div class="center wine-display-bg wine-display-text">
+<div class="center container-bg display-text">
     <div id="Dish Pairing" th:if="${pairing}">
         <h3 th:text="${pairing.getWineName()}"></h3>
         <h5 th:text="${pairing.text}"></h5>

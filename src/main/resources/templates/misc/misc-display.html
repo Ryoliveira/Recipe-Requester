@@ -8,11 +8,11 @@
 
 
 </head>
-<body class="misc-bg">
+<body class="main-bg">
 
 <div th:include="fragments/nav :: nav"/>
 
-<div class="center misc-display-bg">
+<div class="center container-bg display-text">
     <div th:if="${answer}">
         <h5>Question: <span th:text="${answer.question}">?</span></h5>
         <img th:src="${answer.image}">

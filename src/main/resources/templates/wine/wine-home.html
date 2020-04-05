@@ -4,34 +4,60 @@
     <meta charset="UTF-8">
     <title>Wine Home Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <div th:include="fragments/required-tags :: boot-strap-required"/>
+    <div th:include="fragments/required-tags :: boot-strap-required"></div>
 
 </head>
-<body class="wine-bg">
+<body class="main-bg">
 
-<div th:include="fragments/nav :: nav"/>
+<div th:include="fragments/nav :: nav"></div>
 
-<div class="center wine-display-bg wine-display-text">
+<div class="center container-bg display-text">
     <div th:if="${dishPairingSearch}">
         <h1>Dish Pairing</h1>
         <form th:action="@{/wine/dishes/results}">
-            <label>Wine Name: </label>
-            <input type="text" th:name="wineName" required>
-            <i th:text="${noDishPairingFound}"></i><br>
-            <input type="submit" class="btn btn-primary">
+            <div class="form-row">
+                <div class="form-group col-md-5 offset-md-3">
+                    <label for="wineNameInput1">Wine Name</label>
+                    <input type="text" class="form-control" id="wineNameInput1" th:name="wineName"
+                           placeholder="Enter Wine"
+                           required>
+
+                </div>
+                <div class="form-group col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 offset-md-4">
+                    <i th:text="${noDishPairingFound}" class="text-danger"></i>
+                </div>
+            </div>
+
         </form>
     </div>
 
     <div th:if="${winePairingSearch}">
         <h1>Wine Pairing</h1>
         <form th:action="@{/wine/pairing/results}">
-            <label>Food: </label>
-            <input type="text" th:name="foodName" required>
-            <span>&nbsp;</span>
-            <label>Max Price: </label>
-            <input type=number min="0" max="50" value="25" th:name="maxPrice" required>
-            <i th:text="${noWinePairingFound}"></i><br>
-            <input type="submit" class="btn btn-primary">
+            <div class="form-row">
+                <div class="form-group col-md-4 offset-md-1">
+                    <label class="control-label" for="foodName">Food</label>
+                    <input type="text" class="form-control" id="foodName" th:name="foodName" placeholder="Enter Food"
+                           required>
+                </div>
+                <div class="form-group col-md-4 offset-md-1">
+                    <label for="maxPrice1">Max Price</label>
+                    <input type=number class="form-control" id="maxPrice1" min="0" max="50" value="25"
+                           th:name="maxPrice"
+                           placeholder="Enter Max Price" required>
+                </div>
+                <div class="form-group col-md-2 align-self-end">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <div class="form-group col-md-4 offset-md-4">
+                <i th:text="${noWinePairingFound}" class="text-danger"></i>
+            </div>
         </form>
     </div>
 
@@ -39,26 +65,61 @@
         <h1>Wine Recommendation</h1>
 
         <form th:action="@{/wine/recommendations/results}">
-            <label>Wine Name: </label>
-            <input type="text" th:name="wineName" th:value="${wineName}" required><br>
-            <label>Max Price: </label>
-            <input type=number min="0" max="50" value="25" th:name="maxPrice" required><br>
-            <label>Min Rating(0.2 = 1 Point out of 5)</label>
-            <input type="number" min="0.0" step="0.2" max="1.0" value="0.0" th:name="minRating"><br>
-            <label>Number of Results: </label>
-            <input type="number" min="1" max="10" value="1" th:name="number"><br>
-            <i th:text="${noRecommendationFound}"></i><br>
-            <input type="submit" class="btn btn-primary">
+            <div class="form-row">
+                <div class="form-group col-md-3 offset-md-2">
+                    <label for="wineNameInput2">Wine Name</label>
+                    <input type="text" class="form-control" id="wineNameInput2" th:name="wineName"
+                           th:value="${wineName}" placeholder="Enter Wine" required>
+                </div>
+                <div class="form-group col-md-3 offset-md-2">
+                    <label>Max Price </label>
+                    <input type=number class="form-control" id="maxPrice2" min="0" max="50" value="25"
+                           th:name="maxPrice" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3 offset-md-2">
+                    <label for="minRating1">Min Rating</label>
+                    <input type="number" class="form-control" id="minRating1" min="0.0" step="0.2" max="1.0" value="0.0"
+                           th:name="minRating">
+                    <small id="minRatingHelp" class="form-text text-muted">0.2 = 1 Point out of 5</small>
+                </div>
+                <div class="form-group col-md-3 offset-md-2">
+                    <label for="numOfResults1">Number of Results</label>
+                    <input type="number" class="form-control" id="numOfResults1" min="1" max="10" value="1"
+                           th:name="number">
+                </div>
+            </div>
+            <div class="form-row text-center">
+                <div class="form-group col-12">
+                    <i th:text="${noRecommendationFound}" class="text-danger"></i>
+                </div>
+            </div>
+            <div class="form-row text-center">
+                <div class="form-group col-12">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
         </form>
     </div>
 
     <div th:if="${wineDescriptionSearch}">
         <h1>Wine Description</h1>
         <form th:action="@{/wine/description/result}">
-            <label>Wine: </label>
-            <input type="text" th:name="wineName" required>
-            <i th:text="${noDescFound}"></i><br>
-            <input type="submit" class="btn btn-primary">
+            <div class="form-row">
+                <div class="form-group col-md-5 offset-md-3">
+                    <label for="wineNameInput3">Wine</label>
+                    <input type="text" class="form-control" id="wineNameInput3" th:name="wineName" placeholder="Enter Wine" required>
+                </div>
+                <div class="form-group col-md-1 align-self-end">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+            <div class="form-row text-center">
+                <div class="form-group col-12">
+                    <i th:text="${noDescFound}" class="text-danger"></i>
+                </div>
+            </div>
         </form>
     </div>
 </div>

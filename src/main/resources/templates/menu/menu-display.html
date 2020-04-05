@@ -6,11 +6,11 @@
         <link type="text/css" rel="stylesheet" href="/css/style.css">
         <div th:include="fragments/required-tags :: boot-strap-required"/>
     </head>
-    <body>
+    <body class="main-bg">
 
         <div th:include="fragments/nav :: nav"/>
 
-        <div class="center">
+        <div class="center container-bg display-text">
             <table th:if="${menuItemResults}" class="table table-dark table-striped">
                 <th>#</th>
                 <th>Menu Item</th>

@@ -7,11 +7,11 @@
     <div th:include="fragments/required-tags :: boot-strap-required"/>
 
 </head>
-<body>
+<body class="main-bg">
 
 <div th:include="fragments/nav :: nav"/>
 
-<div class="center">
+<div class="center container-bg display-text">
 
     <div th:if="${recipeResults}">
         <table class="table table-dark table-striped">
