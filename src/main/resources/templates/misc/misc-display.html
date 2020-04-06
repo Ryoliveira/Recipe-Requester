@@ -4,33 +4,36 @@
     <meta charset="UTF-8">
     <title>Misc Display</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <div th:include="fragments/required-tags :: boot-strap-required"/>
+    <div th:include="fragments/required-tags :: boot-strap-required"></div>
 
 
 </head>
 <body class="main-bg">
 
-<div th:include="fragments/nav :: nav"/>
+<div th:include="fragments/nav :: nav"></div>
 
-<div class="center container-bg display-text">
-    <div th:if="${answer}">
-        <h5>Question: <span th:text="${answer.question}">?</span></h5>
-        <img th:src="${answer.image}">
-        <h5>Answer: <span th:text="${answer.answer}"></span></h5>
-    </div>
-    <div th:if="${detectedFoodList}">
-        <h2><u>Food Detected</u></h2>
+
+<div th:if="${answer}" class="center-display container-bg display-text">
+    <h5><b>Question</b></h5>
+    <h5 th:text="${answer.question}"><span>?</span></h5>
+    <img class="img-border" th:src="${answer.image}">
+    <h5><b>Answer</b></h5>
+    <h5 th:text="${answer.answer}"></h5>
+</div>
+<div th:if="${detectedFoodList}" class="center-display container-bg display-text">
+    <h2><u>Food Detected</u></h2>
+    <hr>
+    <div th:each="foodItem : ${detectedFoodList.annotations}">
+        <h4 th:text="${foodItem.annotation}"></h4>
+        <img class="img-border" th:src="${foodItem.image}">
+        <p th:text="${foodItem.tag}"></p>
         <hr>
-        <div th:each="foodItem : ${detectedFoodList.annotations}">
-            <h4 th:text="${foodItem.annotation}"></h4>
-            <img th:src="${foodItem.image}">
-            <p th:text="${foodItem.tag}"></p>
-            <hr>
-        </div>
     </div>
-    <div th:if="${siteContent}">
-        <h3>Articles</h3>
-        <table align="center" class="table table-dark table-striped w-75">
+</div>
+<div th:if="${siteContent}">
+    <div  class="center-display container-bg display-text">
+        <h3><b>Articles</b></h3>
+        <table align="center" class="table table-dark table-striped table-bordered w-75">
             <th>#</th>
             <th>Article</th>
             <th></th>
@@ -44,9 +47,11 @@
                 </td>
             </tr>
         </table>
-        <hr>
-        <h3>Products</h3>
-        <table align="center" class="table table-dark table-striped w-75">
+    </div>
+
+    <div  class="center-display container-bg display-text">
+        <h3><b>Products</b></h3>
+        <table align="center" class="table table-dark table-striped table-bordered w-75">
             <th>#</th>
             <th>Product</th>
             <th></th>
@@ -58,9 +63,10 @@
                 </td>
             </tr>
         </table>
-        <hr>
-        <h3>Menu Items</h3>
-        <table align="center" class="table table-dark table-striped w-75">
+    </div>
+    <div  class="center-display container-bg display-text">
+        <h3><b>Menu Items</b></h3>
+        <table align="center" class="table table-dark table-striped table-bordered w-75">
             <th>#</th>
             <th>Item</th>
             <th></th>
@@ -72,9 +78,10 @@
                 </td>
             </tr>
         </table>
-        <hr>
-        <h3>Recipes</h3>
-        <table align="center" class="table table-dark table-striped w-75">
+    </div>
+    <div  class="center-display container-bg display-text">
+        <h3><b>Recipes</b></h3>
+        <table align="center" class="table table-dark table-striped table-bordered w-75">
             <th>#</th>
             <th>Recipe Name</th>
             <th></th>
@@ -87,29 +94,34 @@
             </tr>
         </table>
     </div>
-    <div th:if="${joke}">
-        <h5 th:text="${joke.text}"></h5>
-        <form th:action="@{/misc/random/joke}">
-            <input type="submit" value="Get Another Joke">
-        </form>
-    </div>
-    <div th:if="${trivia}">
-        <h5 th:text="${trivia.text}"></h5>
-        <form th:action="@{/misc/random/trivia}">
-            <input type="submit" value="Get More Trivia">
-        </form>
-    </div>
-    <div th:if="${foodVideos}">
-        <h5><u>Video Results</u></h5>
-        <div th:each="video : ${foodVideos.videoDetailsList}">
-            <p>Title: <span th:text="${video.title}"/></p>
-            <p>Views: <span th:text="${video.views}"/></p>
-            <img th:src="${video.thumbnail}"/><br>
-            <a th:href="${video.getYoutubeLink()}" target="_blank">Go To Video</a>
-            <hr>
-        </div>
+</div>
+<div th:if="${joke}" class="center-display container-bg display-text">
+    <h5 th:text="${joke.text}"></h5>
+    <br>
+    <form th:action="@{/misc/random/joke}">
+        <button type="submit" class="btn btn-primary">Get Another Joke</button>
+    </form>
+</div>
+<div th:if="${trivia}" class="center-display container-bg display-text">
+    <h5 th:text="${trivia.text}"></h5>
+    <br>
+    <form th:action="@{/misc/random/trivia}">
+        <button type="submit" class="btn btn-primary">Get More Trivia</button>
+    </form>
+</div>
+
+<div th:if="${foodVideos}">
+    <div th:each="video : ${foodVideos.videoDetailsList}"
+         class="center-display container-bg display-text">
+        <h3 th:text="${video.title}"></h3>
+        <p>Views: <span th:text="${video.views}"></span></p>
+        <img class="img-border" th:src="${video.thumbnail}"/>
+        <br>
+        <br>
+        <a class="btn btn-primary" th:href="${video.getYoutubeLink()}" target="_blank">Go To Video</a>
     </div>
 </div>
+
 
 </body>
 </html>

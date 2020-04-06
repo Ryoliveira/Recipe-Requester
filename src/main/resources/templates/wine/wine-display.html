@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <title>Wine Pairing Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <div th:include="fragments/required-tags :: boot-strap-required"/>
+    <div th:include="fragments/required-tags :: boot-strap-required"></div>
 
 </head>
 <body class="main-bg">
 
-<div th:include="fragments/nav :: nav"/>
+<div th:include="fragments/nav :: nav"></div>
 
-<div class="center container-bg display-text">
-    <div id="Dish Pairing" th:if="${pairing}">
+    <div id="Dish Pairing" th:if="${pairing}" class="center-display container-bg display-text">
         <h3 th:text="${pairing.getWineName()}"></h3>
         <h5 th:text="${pairing.text}"></h5>
-        <table class="table table-dark table-sm table-striped w-75" align="center">
+        <table class="table table-dark table-sm table-striped table-bordered w-75" align="center">
             <th>
                 #
             </th>
@@ -30,70 +29,69 @@
         </form>
     </div>
 
-    <div id="Wine Pairing" th:if="${winePairing}">
+    <div id="Wine Pairing" th:if="${winePairing}" class="center-display container-bg display-text">
         <h3>Wine pairings for <span th:text="${winePairing.foodName}"></span></h3>
         <br>
         <span th:text="${winePairing.pairingText}"></span>
         <br>
+        <br>
         <table align="center" class="table table-dark table-striped table-sm w-75">
-            <th>
-                #
-            </th>
-            <th>
-                Paired Wines
-            </th>
+            <th>#</th>
+            <th>Paired Wines</th>
             <tr th:each="wine, iStat : ${winePairing.pairedWines}">
-                <td th:text="${iStat.index} + 1">
-
-                </td>
+                <td th:text="${iStat.index} + 1"></td>
                 <td th:text="${wine}"></td>
             </tr>
         </table>
         <div th:each="product : ${winePairing.wineProductMatches}">
             <h1 th:text="${product.title}"></h1>
-            <span><b>Description:</b> <span th:text="${product.description}"></span></span>
+            <p th:text="${product.description}"></p>
             <br>
-            <img th:src="${product.imageUrl}">
-            <br>
-            <a th:href="${product.link}" target="_blank">Product Link</a>
+            <img class="img-border" th:src="${product.imageUrl}">
             <br>
             <span><b>Price: </b><span th:text="${product.price}"></span></span>
+            <br>
+            <br>
+            <a  class="btn btn-primary" th:href="${product.link}" target="_blank">Product Link</a>
+            <br>
+            <br>
         </div>
+        <br>
+        <hr>
         <form th:action="@{/wine/pairing/search}">
             <input type="submit" value="Back to Search" class="btn btn-primary">
         </form>
     </div>
 
-    <div id="Wine Recommendations" th:if="${wineRecommendation}">
+    <div id="Wine Recommendations" th:if="${wineRecommendation}" class="center-display container-bg display-text">
         <h3> Recommended <span th:text="${wineRecommendation.wineName}"></span> wines</h3>
         <div th:each="product : ${wineRecommendation.recommendedWines}">
             <hr>
             <h1 th:text="${product.title}"></h1>
-            <span><b><u>Description</u></b></span>
-            <p align="center" width="75%" th:text="${product.description}"></p>
+            <p th:text="${product.description}"></p>
             <br>
-            <img th:src="${product.imageUrl}">
-            <br>
-            <a th:href="${product.link}" target="_blank">Product Link</a>
-            <br>
+            <img class="img-border" th:src="${product.imageUrl}">
+            <br><br>
             <span><b>Price: </b><span th:text="${product.price}"></span></span>
+            <br><br>
+            <a class="btn btn-primary" th:href="${product.link}" target="_blank">Product Link</a>
         </div>
+        <br>
+        <hr>
         <form th:action="@{/wine/recommendations/search}">
             <input type="submit" value="Back to Search" class="btn btn-primary">
         </form>
     </div>
 
-    <div id="Wine Description" th:if="${wineDescription}">
+    <div id="Wine Description" th:if="${wineDescription}" class="center-display container-bg display-text">
         <div>
             <h2 th:text="${wineDescription.wineName}"></h2>
-            <p><b>Description: </b> <span th:text="${wineDescription.wineDescription}"></span></p>
+            <p th:text="${wineDescription.wineDescription}"></p>
         </div>
         <form th:action="@{/wine/description/search}">
             <input type="submit" value="Back to Search" class="btn btn-primary">
         </form>
     </div>
-</div>
-
 
 </body>
 </html>

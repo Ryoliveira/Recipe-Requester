@@ -7,6 +7,16 @@
           padding: 10px;
 }
 
+.center-display{
+         border-radius: 25px;
+         margin: 0 auto;
+         margin-bottom: 20px;
+         width: 60%;
+         border: 3px solid #007bff;
+         padding: 20px;
+         text-align:center;
+}
+
 .main-bg{
     background-image: url(/images/main/checkered-pattern.png);
     background-color: #2EC4B6;
@@ -22,7 +32,17 @@
         color: #26547C;
 }
 
-h1 {
-    text-align:center
+.table-corner-rounded{
+        border-radius: 25px;
 }
+
+.img-border {
+        border: 2px solid #007bff;
+}
+
+h1 {
+        text-align: center;
+}
+
+
 

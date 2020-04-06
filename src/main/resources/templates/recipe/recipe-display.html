@@ -4,190 +4,73 @@
     <meta charset="UTF-8">
     <title>Recipe Display</title>
     <link type="text/css" rel="stylesheet" href="/css/style.css">
-    <div th:include="fragments/required-tags :: boot-strap-required"/>
+    <div th:include="fragments/required-tags :: boot-strap-required"></div>
 
 </head>
 <body class="main-bg">
 
-<div th:include="fragments/nav :: nav"/>
+<div th:include="fragments/nav :: nav"></div>
 
-<div class="center container-bg display-text">
 
-    <div th:if="${recipeResults}">
-        <table class="table table-dark table-striped">
-            <th>#</th>
-            <th>Title</th>
-            <th>Time to Make</th>
-            <th>Servings</th>
-            <th>Recipe Info</th>
-            <th>Summary</th>
-            <th>Similar</th>
-            <tr th:each="recipe, iStat : ${recipeResults.recipeList}">
-                <td th:text="${iStat.index} + 1"></td>
-                <td th:text="${recipe.title}"></td>
-                <td th:text="${recipe.readyInMinutes}"></td>
-                <td th:text="${recipe.servings}"></td>
-                <td>
-                    <a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
-                        <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
-                        <input type="submit" value="View" class="btn btn-primary">
-                    </form>
+<div th:if="${recipeResults}" class="center-display container-bg display-text">
+    <table class="table table-dark table-striped table-bordered">
+        <th>#</th>
+        <th>Title</th>
+        <th>Time to Make</th>
+        <th>Servings</th>
+        <th>Recipe Info</th>
+        <th>Summary</th>
+        <th>Similar</th>
+        <tr th:each="recipe, iStat : ${recipeResults.recipeList}">
+            <td th:text="${iStat.index} + 1"></td>
+            <td th:text="${recipe.title}"></td>
+            <td th:text="${recipe.readyInMinutes}"></td>
+            <td th:text="${recipe.servings}"></td>
+            <td>
+                <a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
+                    <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
+                    <input type="submit" value="View" class="btn btn-primary">
+                </form>
 
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div th:if="${recipeWithIngredients}" th:each="recipe : ${recipeWithIngredients}">
-        <table class="table table-dark table-striped">
-            <th>Title</th>
-            <th>Summary</th>
-            <th>Similar</th>
-            <tr>
-                <td th:text="${recipe.title}"></td>
-                <td>
-                    <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
-                        <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
-                        <input type="submit" value="View" class="btn btn-primary">
-                    </form>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <div th:if="${!recipe.usedIngredients.isEmpty()} ">
-            <h3>Used Ingredients</h3>
-            <table class="table table-dark table-striped">
-                <th>#</th>
-                <th>Ingredient</th>
-                <th>Amount</th>
-                <th>Unit</th>
-                <th>Aisle</th>
-                <tr th:each="ingredient, iStat : ${recipe.usedIngredients} ">
-                    <td th:text="${iStat.index} + 1"></td>
-                    <td th:text="${ingredient.name}"></td>
-                    <td th:text="${ingredient.amount}"></td>
-                    <td th:text="${ingredient.unit}"></td>
-                    <td th:text="${ingredient.aisle}"></td>
-                </tr>
-            </table>
-        </div>
-        <div th:if="${!recipe.missedIngredients.isEmpty()}">
-            <h3>Missed Ingredients</h3>
-            <table class="table table-dark table-striped">
-                <th>#</th>
-                <th>Ingredient</th>
-                <th>Amount</th>
-                <th>Unit</th>
-                <th>Aisle</th>
-                <tr th:each="ingredient, iStat : ${recipe.missedIngredients}">
-                    <td th:text="${iStat.index} + 1"></td>
-                    <td th:text="${ingredient.name}"></td>
-                    <td th:text="${ingredient.amount}"></td>
-                    <td th:text="${ingredient.unit}"></td>
-                    <td th:text="${ingredient.aisle}"></td>
-                </tr>
-            </table>
-        </div>
-        <hr>
-    </div>
-    <div th:if="${autoCompletedItems}">
-        <table class="table table-dark table-striped">
-            <th>#</th>
-            <th>Recipe</th>
-            <th>Recipe Info</th>
-            <th>Summary</th>
-            <th>Similar</th>
-            <tr th:each="recipe, iStat : ${autoCompletedItems}">
-                <td th:text="${iStat.index + 1}"></td>
-                <td th:text="${recipe.title}"></td>
-                <td>
-                    <a th:href="@{/recipe/ingredients/{id}/info(id = ${recipe.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}">View</a>
-                </td>
-                <td>
-                    <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
-                        <input type="number" min="1" max="10" value="1" th:name="numOfResults">
-                        <input type="submit" value="View">
-                    </form>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div th:if="${randomRecipeResults}">
-        <table class="table table-dark table-striped">
-            <th>#</th>
-            <th>Title</th>
-            <th>Time to Make</th>
-            <th>Servings</th>
-            <th>Recipe Info</th>
-            <th>Summary</th>
-            <th>Similar</th>
-            <tr th:each="recipe, iStat : ${randomRecipeResults.recipes}">
-                <td th:text="${iStat.index} + 1"></td>
-                <td th:text="${recipe.title}"></td>
-                <td th:text="${recipe.readyInMinutes}"></td>
-                <td th:text="${recipe.servings}"></td>
-                <td>
-                    <a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
-                        <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
-                        <input type="submit" value="View" class="btn btn-primary">
-                    </form>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div th:if="${recipeSummary}">
-        <h3 th:text="${recipeSummary.title}"></h3>
-        <p th:utext="${recipeSummary.summary}"></p>
-    </div>
-
-    <div th:if="${recipeInformation}">
-        <table class="table table-dark table-striped">
-            <th>Title</th>
-            <th>Time to Make</th>
-            <th>Servings</th>
-            <th>Summary</th>
-            <th>Similar</th>
-            <tr>
-                <td th:text="${recipeInformation.title}"></td>
-                <td th:text="${recipeInformation.readyInMinutes}"></td>
-                <td th:text="${recipeInformation.servings}"></td>
-                <td>
-                    <a th:href="@{/recipe/summary/{id}(id = ${recipeInformation.id})}" class="btn btn-primary">View</a>
-                </td>
-                <td>
-                    <form th:action="@{/recipe/similar/{id}(id = ${recipeInformation.id})}">
-                        <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
-                        <input type="submit" value="View" class="btn btn-primary">
-                    </form>
-                </td>
-            </tr>
-        </table>
-
-        <h3>Ingredients</h3>
+            </td>
+        </tr>
+    </table>
+</div>
+<div th:if="${recipesWithIngredientsList}" th:each="recipe : ${recipesWithIngredientsList}"
+     class="center-display container-bg display-text">
+    <table class="table table-dark table-striped table-bordered">
+        <th>Title</th>
+        <th>Summary</th>
+        <th>Similar</th>
+        <tr>
+            <td th:text="${recipe.title}"></td>
+            <td>
+                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
+                    <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
+                    <input type="submit" value="View" class="btn btn-primary">
+                </form>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <div th:if="${!recipe.usedIngredients.isEmpty()} ">
+        <h3>Used Ingredients</h3>
         <table class="table table-dark table-striped">
             <th>#</th>
             <th>Ingredient</th>
             <th>Amount</th>
             <th>Unit</th>
             <th>Aisle</th>
-            <tr th:each="ingredient, iStat : ${recipeInformation.extendedIngredients}">
+            <tr th:each="ingredient, iStat : ${recipe.usedIngredients} ">
                 <td th:text="${iStat.index} + 1"></td>
                 <td th:text="${ingredient.name}"></td>
                 <td th:text="${ingredient.amount}"></td>
@@ -195,28 +78,142 @@
                 <td th:text="${ingredient.aisle}"></td>
             </tr>
         </table>
+    </div>
+    <div th:if="${!recipe.missedIngredients.isEmpty()}">
+        <h3>Missed Ingredients</h3>
+        <table class="table table-dark table-striped table-bordered">
+            <th>#</th>
+            <th>Ingredient</th>
+            <th>Amount</th>
+            <th>Unit</th>
+            <th>Aisle</th>
+            <tr th:each="ingredient, iStat : ${recipe.missedIngredients}">
+                <td th:text="${iStat.index} + 1"></td>
+                <td th:text="${ingredient.name}"></td>
+                <td th:text="${ingredient.amount}"></td>
+                <td th:text="${ingredient.unit}"></td>
+                <td th:text="${ingredient.aisle}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:if="${autoCompletedItems}" class="center-display container-bg display-text">
+    <table class="table table-dark table-striped table-bordered">
+        <th>#</th>
+        <th>Recipe</th>
+        <th>Recipe Info</th>
+        <th>Summary</th>
+        <th>Similar</th>
+        <tr th:each="recipe, iStat : ${autoCompletedItems}">
+            <td th:text="${iStat.index + 1}"></td>
+            <td th:text="${recipe.title}"></td>
+            <td>
+                <a th:href="@{/recipe/ingredients/{id}/info(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
+                    <input type="number" min="1" max="10" value="1" th:name="numOfResults">
+                    <button type="submit" class="btn btn-primary">View</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div th:if="${randomRecipeResults}" class="center-display container-bg display-text">
+    <table class="table table-dark table-striped table-bordered">
+        <th>#</th>
+        <th>Title</th>
+        <th>Time to Make</th>
+        <th>Servings</th>
+        <th>Recipe Info</th>
+        <th>Summary</th>
+        <th>Similar</th>
+        <tr th:each="recipe, iStat : ${randomRecipeResults.recipes}">
+            <td th:text="${iStat.index} + 1"></td>
+            <td th:text="${recipe.title}"></td>
+            <td th:text="${recipe.readyInMinutes}"></td>
+            <td th:text="${recipe.servings}"></td>
+            <td>
+                <a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
+                    <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
+                    <button type="submit" class="btn btn-primary">View</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<div th:if="${recipeSummary}" class="center-display container-bg display-text">
+    <h3 th:text="${recipeSummary.title}"></h3>
+    <p th:utext="${recipeSummary.summary}"></p>
+</div>
 
-        <div th:if="${!recipeInformation.winePairing.pairedWines.isEmpty()}">
-            <h3>Wine Pairings</h3>
-            <table class="table table-dark table-striped">
-                <th>#</th>
-                <th>Wine</th>
-                <th>Recommendations</th>
-                <tr th:each="wine, iStat : ${recipeInformation.winePairing.pairedWines}">
-                    <td th:text="${iStat.index + 1}"></td>
-                    <td th:text="${wine}"></td>
-                    <td>
-                        <a th:href="@{/wine/recommendations/search(wineName=${wine})}"
-                           class="btn btn-primary">Search</a>
-                    </td>
-                </tr>
-            </table>
-            <div>
-                <p th:text="${recipeInformation.winePairing.pairingText}"></p>
-            </div>
+<div th:if="${recipeInformation}" class="center-display container-bg display-text">
+    <table class="table table-dark table-striped table-bordered">
+        <th>Title</th>
+        <th>Time to Make</th>
+        <th>Servings</th>
+        <th>Summary</th>
+        <th>Similar</th>
+        <tr>
+            <td th:text="${recipeInformation.title}"></td>
+            <td th:text="${recipeInformation.readyInMinutes}"></td>
+            <td th:text="${recipeInformation.servings}"></td>
+            <td>
+                <a th:href="@{/recipe/summary/{id}(id = ${recipeInformation.id})}" class="btn btn-primary">View</a>
+            </td>
+            <td>
+                <form th:action="@{/recipe/similar/{id}(id = ${recipeInformation.id})}">
+                    <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
+                    <input type="submit" value="View" class="btn btn-primary">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <h3>Ingredients</h3>
+    <table class="table table-dark table-striped table-bordered">
+        <th>#</th>
+        <th>Ingredient</th>
+        <th>Amount</th>
+        <th>Unit</th>
+        <th>Aisle</th>
+        <tr th:each="ingredient, iStat : ${recipeInformation.extendedIngredients}">
+            <td th:text="${iStat.index} + 1"></td>
+            <td th:text="${ingredient.name}"></td>
+            <td th:text="${ingredient.amount}"></td>
+            <td th:text="${ingredient.unit}"></td>
+            <td th:text="${ingredient.aisle}"></td>
+        </tr>
+    </table>
+
+    <div th:if="${recipeInformation.winePairing.pairedWines}">
+        <h3>Wine Pairings</h3>
+        <table class="table table-dark table-striped table-bordered">
+            <th>#</th>
+            <th>Wine</th>
+            <th>Recommendations</th>
+            <tr th:each="wine, iStat : ${recipeInformation.winePairing.pairedWines}">
+                <td th:text="${iStat.index + 1}"></td>
+                <td th:text="${wine}"></td>
+                <td>
+                    <a th:href="@{/wine/recommendations/search(wineName=${wine})}"
+                       class="btn btn-primary">Search</a>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <p th:text="${recipeInformation.winePairing.pairingText}"></p>
         </div>
     </div>
-
 </div>
 
 
