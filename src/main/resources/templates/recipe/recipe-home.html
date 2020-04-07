@@ -16,7 +16,7 @@
         <form th:action="@{/recipe/recipe-search/results}">
             <div class="form-group">
                 <label for="queryInput1">Query: </label>
-                <input type="text" class="form-control" id="queryInput1" th:name="query" required>
+                <input type="text" class="form-control" id="queryInput1" th:name="query" placeholder="Enter Query" required>
             </div>
             <div class="form-group">
                 <label for="selectCuisine">Cuisine</label>
@@ -38,7 +38,7 @@
                 <label for="instructionsRequiredCheck">Instructions Required: </label>
                 <input type="checkbox" th:name="instructionsRequired" class="align-self-end" id="instructionsRequiredCheck" value="true"/><br>
             </div>
-            <div class="form-group col-md-1 offset-md-6">
+            <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
@@ -60,7 +60,7 @@
                 <label for="ignorePantryItemsCheck">Ignore Pantry Items: </label>
                 <input type="checkbox" id="ignorePantryItemsCheck" th:name="ignorePantry" value="true">
             </div>
-            <div class="form-group col-md-1 offset-md-6">
+            <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
@@ -72,13 +72,13 @@
         <form th:action="@{/recipe/autocomplete/results}">
             <div class="form-group">
                 <label for="queryInput2">Query</label>
-                <input type="text" class="form-control" id="queryInput2" th:name="query" required/>
+                <input type="text" class="form-control" id="queryInput2" th:name="query" placeholder="Enter Query" required/>
             </div>
             <div class="form-group">
                 <label for="numOfResults3">Number of Results: </label>
                 <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults3" th:name="numOfResults"/>
             </div>
-            <div class="form-group col-md-1 offset-md-6">
+            <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
@@ -95,7 +95,7 @@
                 <label for="numOfResults4">Number of Results</label>
                 <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults4" th:name="numOfResults">
             </div>
-            <div class="form-group col-md-1 offset-md-6">
+            <div class="form-group text-center">
                 <button class="btn btn-primary">Search</button>
             </div>
 

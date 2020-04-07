@@ -35,42 +35,32 @@
                         <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults1"
                                th:name="number">
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4 offset-md-4">
-                            <i th:text="${menuItemsNotFound}" class="text-danger"></i>
-                        </div>
+                    <div class="form-group text-center">
+                        <i th:text="${menuItemsNotFound}" class="text-danger"></i>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-1 offset-md-5">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </form>
             </div>
-
             <div th:if="${autoCompleteSearch}">
                 <h1>Menu Item AutoComplete Search</h1>
                 <form th:action="@{/menu/auto-complete/results}">
-                    <div class="form-row">
-                        <div class="form-group col-md-3 offset-md-3">
-                            <label for="itemQuery2">Query</label>
-                            <input type="text" th:name="query" class="form-control" id="itemQuery2" required>
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label for="numOfResults2">Number of Results</label>
-                            <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults2"
-                                   th:name="number">
-                        </div>
-                        <div class="form-group col-md-1 align-self-end">
-                            <button class="btn btn-primary">Search</button>
-                        </div>
+                    <div class="form-group">
+                        <label for="itemQuery2">Query</label>
+                        <input type="text" th:name="query" class="form-control" id="itemQuery2" placeholder="Enter Query" required>
                     </div>
-                    <div class="form-row ">
-                        <div class="form-group col-md-4 offset-md-4">
-                            <i th:text=${noMenuItemsFound} class="text-danger"></i>
-                        </div>
+                    <div class="form-group">
+                        <label for="numOfResults2">Number of Results</label>
+                        <input type="number" min="1" max="10" value="1" class="form-control" id="numOfResults2"
+                               th:name="number">
                     </div>
-
+                    <div class="form-group text-center">
+                        <i th:text=${noMenuItemsFound} class="text-danger"></i>
+                    </div>
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary">Search</button>
+                    </div>
                 </form>
             </div>
         </div>

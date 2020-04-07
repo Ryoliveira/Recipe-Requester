@@ -84,7 +84,11 @@ public class RecipeServiceImpl implements RecipeService {
 
         LOGGER.info(recipeWithIngredients.toString());
 
-        return recipeWithIngredients;
+        if(recipeWithIngredients.size() == 0){
+            return null;
+        }else{
+            return recipeWithIngredients;
+        }
     }
 
     @Override
@@ -157,6 +161,27 @@ public class RecipeServiceImpl implements RecipeService {
     public RandomRecipeResults getRandomRecipes(boolean limitLicense, String tags, int numOfResults) {
         String encodedTags = encodeString(tags);
 
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/random")
+                .queryParam("apiKey", key)
+                .queryParam("number", numOfResults)
+                .queryParam("tags", encodedTags)
+                .queryParam("limitLicense", limitLicense)
+                .toUriString();
+
+
+        RandomRecipeResults randomRecipeResults = restTemplate.getForObject(url, RandomRecipeResults.class);
+
+        LOGGER.info(randomRecipeResults.toString());
+
+        if (!randomRecipeResults.getRecipes().isEmpty()) {
+            return randomRecipeResults;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public RandomRecipeResults getRandomRecipes(boolean limitLicense, int numOfResults) {
         String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/random")
                 .queryParam("apiKey", key)
                 .queryParam("number", numOfResults)

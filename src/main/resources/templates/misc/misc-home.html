@@ -13,21 +13,19 @@
 <div class="center container-bg display-text">
     <div th:if="${quickAnswerSearch}">
         <form th:action="@{/misc/quick-answer/answer}">
-            <div class="form-row">
-                <div class="form-group col-md-4 offset-md-4">
-                    <label class="control-label" for="questionInput">Question</label>
-                    <input type="text" class="form-control" id="questionInput" th:name="question"
-                           placeholder="Enter Question" required>
-                </div>
-                <div class="form-group align-self-end">
-                    <button type="submit" class="btn btn-primary">Ask</button>
-                </div>
+
+            <div class="form-group">
+                <label class="control-label" for="questionInput">Question</label>
+                <input type="text" class="form-control" id="questionInput" th:name="question"
+                       placeholder="Enter Question" required>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-4 offset-md-4">
-                    <i th:text="${answerNotFound}" class="text-danger"></i>
-                </div>
+            <div class="form-group text-center">
+                <i th:text="${answerNotFound}" class="text-danger"></i>
             </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Ask</button>
+            </div>
+
         </form>
     </div>
     <div th:if="${analyzeText}">
@@ -35,74 +33,64 @@
             <div class="form-group">
                 <textarea rows="4" cols="50" class="form-control" id="textAreaInput" th:name="text" form="analyzerForm">Enter Text here</textarea>
             </div>
-            <div class="form-group col-md-6 offset-md-3">
+            <div class="form-group text-center">
                 <i th:text="${NoDetectedFood}" class="text-danger"></i>
             </div>
-            <div class="form-group col-md-2 offset-md-5">
+            <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Analyze</button>
             </div>
         </form>
     </div>
     <div th:if="${siteSearch}">
         <form th:action="@{/misc/site-search/results}">
-            <div class="form-row">
-                <div class="form-group col-md-5 offset-md-3">
-                    <label for="siteContentSearch">Search Site Content</label>
-                    <input type="text" class="form-control" id="siteContentSearch" th:name="query"
-                           placeholder="Enter Search Query" required>
-                </div>
-                <div class="form-group align-self-end">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
+            <div class="form-group">
+                <label for="siteContentSearch">Search Site Content</label>
+                <input type="text" class="form-control" id="siteContentSearch" th:name="query"
+                       placeholder="Enter Search Query" required>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </form>
     </div>
     <div th:if="${foodVideoSearch}">
         <h1>Food Video Search</h1>
         <form th:action="@{/misc/food-video/results}">
-            <div class="form-group col-md-4 offset-md-4">
+            <div class="form-group">
                 <label for="videoQuery">Query</label>
                 <input type="text" class="form-control" id="videoQuery" th:name="query" placeholder="Enter Query"
                        required>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-4 offset-md-2">
-                    <label for="selectType">Type</label>
-                    <select class="form-control" id="selectType" th:name="type"
-                            th:include="fragments/form-select-populate :: food-type">
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="selectCuisine">Cuisine: </label>
-                    <select class="form-control" id="selectCuisine" th:name="cuisine"
-                            th:include="fragments/form-select-populate :: cuisine-type">
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="selectType">Type</label>
+                <select class="form-control" id="selectType" th:name="type"
+                        th:include="fragments/form-select-populate :: food-type">
+                </select>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-4 offset-md-2">
-                    <label for="selectDiet">Diet</label>
-                    <select class="form-control" id="selectDiet" th:name="diet"
-                            th:include="fragments/form-select-populate :: diet-type">
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="selectCuisine">Cuisine: </label>
+                <select class="form-control" id="selectCuisine" th:name="cuisine"
+                        th:include="fragments/form-select-populate :: cuisine-type">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="selectDiet">Diet</label>
+                <select class="form-control" id="selectDiet" th:name="diet"
+                        th:include="fragments/form-select-populate :: diet-type">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numOfOptions1">Num of results</label>
+                <input class="form-control" id="numOfOptions1" th:name="number" type="number" min="1" max="10"
+                       value="1">
+            </div>
+            <div class="form-group text-center">
+                <i th:text="${noDetectedFood}" class="text-danger"></i>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
 
-                <div class="form-group col-md-4">
-                    <label for="numOfOptions1">Num of results</label>
-                    <input class="form-control" id="numOfOptions1" th:name="number" type="number" min="1" max="10"
-                           value="1">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4 offset-md-4">
-                    <i th:text="${noDetectedFood}" class="text-danger"></i>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4 offset-md-4">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-            </div>
         </form>
     </div>
 

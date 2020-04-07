@@ -196,22 +196,24 @@
     </table>
 
     <div th:if="${recipeInformation.winePairing.pairedWines}">
-        <h3>Wine Pairings</h3>
-        <table class="table table-dark table-striped table-bordered">
-            <th>#</th>
-            <th>Wine</th>
-            <th>Recommendations</th>
-            <tr th:each="wine, iStat : ${recipeInformation.winePairing.pairedWines}">
-                <td th:text="${iStat.index + 1}"></td>
-                <td th:text="${wine}"></td>
-                <td>
-                    <a th:href="@{/wine/recommendations/search(wineName=${wine})}"
-                       class="btn btn-primary">Search</a>
-                </td>
-            </tr>
-        </table>
-        <div>
-            <p th:text="${recipeInformation.winePairing.pairingText}"></p>
+        <div th:if="${!recipeInformation.winePairing.pairedWines.isEmpty()}">
+            <h3>Wine Pairings</h3>
+            <table class="table table-dark table-striped table-bordered">
+                <th>#</th>
+                <th>Wine</th>
+                <th>Recommendations</th>
+                <tr th:each="wine, iStat : ${recipeInformation.winePairing.pairedWines}">
+                    <td th:text="${iStat.index + 1}"></td>
+                    <td th:text="${wine}"></td>
+                    <td>
+                        <a th:href="@{/wine/recommendations/search(wineName=${wine})}"
+                           class="btn btn-primary">Search</a>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <p th:text="${recipeInformation.winePairing.pairingText}"></p>
+            </div>
         </div>
     </div>
 </div>

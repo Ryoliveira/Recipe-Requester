@@ -19,6 +19,8 @@ public interface RecipeService {
 
     RandomRecipeResults getRandomRecipes(boolean limitLicense, String tags, int numOfResults);
 
+    RandomRecipeResults getRandomRecipes(boolean limitLicense, int numOfResults);
+
     RecipeSummary getRecipeSummary(int recipeId);
 
 }

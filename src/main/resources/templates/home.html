@@ -10,9 +10,25 @@
 
 <div th:include="fragments/nav :: nav"></div>
 
-<h3>Hello!!</h3>
-<h3>This is the home page for my food app</h3>
-<h3>Definitely a work in progress. Will improve over time and hard work :)</h3>
+<div class="center-display container-bg display-text">
+    <h3><u>Try this new Recipe!</u></h3>
+    <br>
+    <br>
+    <h4 th:text="${recipe.title}"></h4>
+    <br>
+    <img class="img-border" th:src="${recipe.image}">
+    <br>
+    <br>
+    <h5>Ready in <span th:text="${recipe.readyInMinutes}"></span> minutes</h5>
+    <h5>Servings: <span th:text="${recipe.servings}"></span></h5>
+    <br>
+    <br>
+    <a th:href="@{recipe/ingredients/{id}/info(id=${recipe.id})}" class="btn btn-primary">View Recipe Info</a>
+    <hr>
+    <button class="btn btn-primary" onclick="window.location.reload();">Get another random recipe</button>
+
+</div>
+
 
 </body>
 </html>

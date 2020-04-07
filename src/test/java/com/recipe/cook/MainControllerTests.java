@@ -2,9 +2,13 @@ package com.recipe.cook;
 
 
 import com.recipe.cook.controller.MainController;
+import com.recipe.cook.service.RecipeService;
+import com.recipe.cook.service.RecipeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -17,11 +21,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class MainControllerTests {
 
+    @InjectMocks
     MockMvc mainMvc;
+
+    @Mock
+    RecipeServiceImpl recipeServiceMock;
 
     @Before
     public void setUp() {
-        final MainController mainController = new MainController();
+        final MainController mainController = new MainController(recipeServiceMock);
         mainMvc = MockMvcBuilders.standaloneSetup(mainController).build();
     }
 
