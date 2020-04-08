@@ -213,4 +213,20 @@ public class RecipeServiceImpl implements RecipeService {
 
         return recipeSummary;
     }
+
+    @Override
+    public List<RecipeInstructions> getRecipeInstructions(int recipeId) {
+
+        String url = UriComponentsBuilder.fromHttpUrl(spoonacularUrl).path("/recipes/" + recipeId + "/analyzedInstructions")
+                                         .queryParam("apiKey", key)
+                                         .toUriString();
+
+        ResponseEntity<List<RecipeInstructions>> response = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<RecipeInstructions>>() {});
+
+        List<RecipeInstructions> recipeInstructions = response.getBody();
+
+        LOGGER.info(recipeInstructions.toString());
+
+        return recipeInstructions;
+    }
 }

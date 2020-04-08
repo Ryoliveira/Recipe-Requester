@@ -157,5 +157,17 @@ public class RecipeController {
         return "recipe/recipe-display";
     }
 
+    @GetMapping("/{id}/recipe-instructions")
+    public String getRecipeInstructions(@PathVariable("id") int recipeId, Model theModel){
+        List<RecipeInstructions> recipeInstructions = recipeService.getRecipeInstructions(recipeId);
+        RecipeInformation recipeInformation = recipeService.getRecipeInformation(recipeId, true);
+
+        theModel.addAttribute("recipeInstructions", recipeInstructions);
+        theModel.addAttribute("recipeInformation", recipeInformation);
+
+        return "recipe/recipe-instructions";
+
+    }
+
 
 }

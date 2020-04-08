@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Instructions</title>
+    <link type="text/css" rel="stylesheet" href="/css/style.css">
+    <div th:include="fragments/required-tags :: boot-strap-required"></div>
+</head>
+<body class="main-bg">
+
+<div th:include="fragments/nav :: nav"></div>
+
+<div class="center-display container-bg display-text">
+    <h3><u>Ingredients</u></h3>
+    <div>
+        <table class="table table-dark table-striped table-bordered">
+            <th>#</th>
+            <th>Ingredient</th>
+            <th>Amount</th>
+            <th>Unit</th>
+            <th>Aisle</th>
+            <tr th:each="ingredient, iStat : ${recipeInformation.extendedIngredients}">
+                <td th:text="${iStat.index} + 1"></td>
+                <td th:text="${ingredient.name}"></td>
+                <td th:text="${ingredient.amount}"></td>
+                <td th:text="${ingredient.unit}"></td>
+                <td th:text="${ingredient.aisle}"></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <h3><u>Cooking Instructions</u></h3>
+    <div th:each="recipe : ${recipeInstructions}">
+        <hr>
+        <div th:if="${recipe.name != null}">
+            <h3 th:text="${recipe.name}"></h3>
+        </div>
+        <div th:each="step : ${recipe.recipeSteps}">
+            <h4><u>Step <span th:text="${step.number}"></span></u></h4>
+            <p th:text="${step.step}"></p>
+            <div th:if="${step.recipeCookTime != null}">
+                <p>Time: <span th:text="${step.recipeCookTime.number}"></span> <span
+                        th:text="${step.recipeCookTime.unit}"></span></p>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+</div>
+
+
+</body>
+</html>

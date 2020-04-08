@@ -23,4 +23,8 @@ public interface RecipeService {
 
     RecipeSummary getRecipeSummary(int recipeId);
 
+    List<RecipeInstructions> getRecipeInstructions(int recipeId);
+
+
+
 }
