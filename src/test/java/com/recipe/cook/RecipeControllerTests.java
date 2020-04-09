@@ -252,4 +252,23 @@ public class RecipeControllerTests {
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
     }
+
+    @Test
+    public void getRecipeInstructions_success() throws Exception {
+        List<RecipeInstructions> recipeInstructions = new ArrayList<>();
+        RecipeInformation recipeInformationMock = mock(RecipeInformation.class);
+
+        when(recipeServiceMock.getRecipeInstructions(anyInt())).thenReturn(recipeInstructions);
+        when(recipeServiceMock.getRecipeInformation(anyInt(), anyBoolean())).thenReturn(recipeInformationMock);
+
+        recipeControllerMock.perform(get("/recipe/{id}/recipe-instructions", 1234)
+                            .param("recipeName","test"))
+                            .andExpect(status().isOk())
+                            .andExpect(model().attribute("recipeInstructions", recipeInstructions))
+                            .andExpect(model().attribute("recipeInformation", recipeInformationMock))
+                            .andExpect(model().attribute("recipeName", "test"))
+                            .andExpect(view().name("recipe/recipe-instructions"))
+                            .andDo(MockMvcResultHandlers.print())
+                            .andReturn();
+    }
 }

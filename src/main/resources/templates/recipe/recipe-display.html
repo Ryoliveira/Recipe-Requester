@@ -19,6 +19,7 @@
         <th>Time to Make</th>
         <th>Servings</th>
         <th>Recipe Info</th>
+        <th>Cooking Instructions</th>
         <th>Summary</th>
         <th>Similar</th>
         <tr th:each="recipe, iStat : ${recipeResults.recipeList}">
@@ -26,18 +27,14 @@
             <td th:text="${recipe.title}"></td>
             <td th:text="${recipe.readyInMinutes}"></td>
             <td th:text="${recipe.servings}"></td>
-            <td>
-                <a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a>
-            </td>
-            <td>
-                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
-            </td>
+            <td><a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/{id}/recipe-instructions(id = ${recipe.id}, recipeName = ${recipe.title})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a></td>
             <td>
                 <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
                     <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
                     <input type="submit" value="View" class="btn btn-primary">
                 </form>
-
             </td>
         </tr>
     </table>
@@ -46,13 +43,13 @@
      class="center-display container-bg display-text">
     <table class="table table-dark table-striped table-bordered">
         <th>Title</th>
+        <th>Cooking Instructions</th>
         <th>Summary</th>
         <th>Similar</th>
         <tr>
             <td th:text="${recipe.title}"></td>
-            <td>
-                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
-            </td>
+            <td><a th:href="@{recipe/{id}/recipe-instructions(id=${recipe.id}, recipeName = ${recipe.title})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a></td>
             <td>
                 <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
                     <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
@@ -102,14 +99,14 @@
         <th>#</th>
         <th>Recipe</th>
         <th>Recipe Info</th>
+        <th>Cooking Instructions</th>
         <th>Summary</th>
         <th>Similar</th>
         <tr th:each="recipe, iStat : ${autoCompletedItems}">
             <td th:text="${iStat.index + 1}"></td>
             <td th:text="${recipe.title}"></td>
-            <td>
-                <a th:href="@{/recipe/ingredients/{id}/info(id = ${recipe.id})}" class="btn btn-primary">View</a>
-            </td>
+            <td><a th:href="@{/recipe/ingredients/{id}/info(id = ${recipe.id})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/{id}/recipe-instructions(id = ${recipe.id}, recipeName = ${recipe.title})}" class="btn btn-primary">View</a></td>
             <td>
                 <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
             </td>
@@ -129,6 +126,7 @@
         <th>Time to Make</th>
         <th>Servings</th>
         <th>Recipe Info</th>
+        <th>Cooking Instructions</th>
         <th>Summary</th>
         <th>Similar</th>
         <tr th:each="recipe, iStat : ${randomRecipeResults.recipes}">
@@ -136,12 +134,9 @@
             <td th:text="${recipe.title}"></td>
             <td th:text="${recipe.readyInMinutes}"></td>
             <td th:text="${recipe.servings}"></td>
-            <td>
-                <a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a>
-            </td>
-            <td>
-                <a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a>
-            </td>
+            <td><a th:href="@{/recipe/ingredients/{id}/info/(id = ${recipe.id})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/{id}/recipe-instructions(id = ${recipe.id}, recipeName = ${recipe.title})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/summary/{id}(id = ${recipe.id})}" class="btn btn-primary">View</a></td>
             <td>
                 <form th:action="@{/recipe/similar/{id}(id = ${recipe.id})}">
                     <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>
@@ -161,15 +156,15 @@
         <th>Title</th>
         <th>Time to Make</th>
         <th>Servings</th>
+        <th>Cooking Instructions</th>
         <th>Summary</th>
         <th>Similar</th>
         <tr>
             <td th:text="${recipeInformation.title}"></td>
             <td th:text="${recipeInformation.readyInMinutes}"></td>
             <td th:text="${recipeInformation.servings}"></td>
-            <td>
-                <a th:href="@{/recipe/summary/{id}(id = ${recipeInformation.id})}" class="btn btn-primary">View</a>
-            </td>
+            <td><a th:href="@{/recipe/{id}/recipe-instructions(id = ${recipeInformation.id}, recipeName = ${recipeInformation.title})}" class="btn btn-primary">View</a></td>
+            <td><a th:href="@{/recipe/summary/{id}(id = ${recipeInformation.id})}" class="btn btn-primary">View</a></td>
             <td>
                 <form th:action="@{/recipe/similar/{id}(id = ${recipeInformation.id})}">
                     <input type="number" min="1" max="10" value="1" th:name="numOfResults"/>

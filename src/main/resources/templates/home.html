@@ -24,7 +24,7 @@
     <br>
     <br>
     <a th:href="@{recipe/ingredients/{id}/info(id=${recipe.id})}" class="btn btn-primary">View Recipe Info</a>
-    <a th:href="@{recipe/{id}/recipe-instructions(id=${recipe.id})}" class="btn btn-primary">View Recipe Instructions</a>
+    <a th:href="@{recipe/{id}/recipe-instructions(id=${recipe.id}, recipeName = ${recipe.title})}" class="btn btn-primary">View Recipe Instructions</a>
     <hr>
     <button class="btn btn-primary" onclick="window.location.reload();">Get another random recipe</button>
 

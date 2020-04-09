@@ -158,12 +158,16 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}/recipe-instructions")
-    public String getRecipeInstructions(@PathVariable("id") int recipeId, Model theModel){
+    public String getRecipeInstructions(@PathVariable("id") int recipeId,
+                                        @RequestParam("recipeName") String recipeName,
+                                        Model theModel){
+
         List<RecipeInstructions> recipeInstructions = recipeService.getRecipeInstructions(recipeId);
         RecipeInformation recipeInformation = recipeService.getRecipeInformation(recipeId, true);
 
         theModel.addAttribute("recipeInstructions", recipeInstructions);
         theModel.addAttribute("recipeInformation", recipeInformation);
+        theModel.addAttribute("recipeName", recipeName);
 
         return "recipe/recipe-instructions";
 

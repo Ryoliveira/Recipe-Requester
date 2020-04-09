@@ -23,10 +23,9 @@ public class MainController {
     @GetMapping("/")
     public String showHomePage(Model theModel) {
 
+
         Recipe recipe = recipeService.getRandomRecipes(true, 1).getRecipes().get(0);
         theModel.addAttribute("recipe", recipe);
         return "home";
     }
-
-
 }

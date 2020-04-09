@@ -41,7 +41,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void searchRecipes_RecipeFound() {
+    public void searchRecipes_recipeFound() {
 
         RecipeResults recipeResultsSpy = spy(RecipeResults.class);
         List<Recipe> recipeList = Collections.singletonList(new Recipe());
@@ -55,7 +55,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void searchRecipes_RecipeNotFound() {
+    public void searchRecipes_recipeNotFound() {
         RecipeResults recipeResultsMock = mock(RecipeResults.class);
 
         when(restTemplateMock.getForObject(anyString(), eq(RecipeResults.class))).thenReturn(recipeResultsMock);
@@ -66,19 +66,19 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void searchRecipesByIngredient() {
+    public void searchRecipesByIngredient_recipesFound() {
         List<RecipeWithIngredients> recipeWithIngredientsList = new ArrayList<>();
 
         when(restTemplateMock.exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(new ParameterizedTypeReference<List<RecipeWithIngredients>>() {
         }))).thenReturn(new ResponseEntity<>(recipeWithIngredientsList, HttpStatus.OK));
 
-        assertEquals(recipeWithIngredientsList, recipeServiceMock.searchRecipesByIngredient("Test", 2, true, true));
+        assertNull(recipeServiceMock.searchRecipesByIngredient("Test", 2, true, true));
         verify(restTemplateMock, atLeastOnce()).exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(new ParameterizedTypeReference<List<RecipeWithIngredients>>() {
         }));
     }
 
     @Test
-    public void searchRecipesAutoComplete_FoundItems() {
+    public void searchRecipesAutoComplete_foundItems() {
         List<AutoCompletedItem> autoCompletedItems = Collections.singletonList(new AutoCompletedItem());
 
         when(restTemplateMock.exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(new ParameterizedTypeReference<List<AutoCompletedItem>>() {
@@ -90,7 +90,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void searchRecipesAutoComplete_ItemsNotFound() {
+    public void searchRecipesAutoComplete_itemsNotFound() {
         List<AutoCompletedItem> autoCompletedItems = new ArrayList<>();
 
         when(restTemplateMock.exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(new ParameterizedTypeReference<List<AutoCompletedItem>>() {
@@ -102,7 +102,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void getRecipeInformation_FoundInformation() {
+    public void getRecipeInformation_foundInformation() {
         RecipeInformation recipeInformationSpy = spy(RecipeInformation.class);
         when(restTemplateMock.getForObject(anyString(), eq(RecipeInformation.class))).thenReturn(recipeInformationSpy);
 
@@ -111,7 +111,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void getSimilarRecipes_FoundRecipe() {
+    public void getSimilarRecipes_foundRecipe() {
         List<Recipe> recipeList = Collections.singletonList(new Recipe());
 
         when(restTemplateMock.exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(new ParameterizedTypeReference<List<Recipe>>() {
@@ -123,7 +123,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void getSimilarRecipes_RecipeNotFound() {
+    public void getSimilarRecipes_recipeNotFound() {
         List<Recipe> recipeList = new ArrayList<>();
 
         when(restTemplateMock.exchange(anyString(), eq(HttpMethod.GET), eq(null), eq(new ParameterizedTypeReference<List<Recipe>>() {
@@ -135,7 +135,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void getRandomRecipes_FoundRecipes() {
+    public void getRandomRecipes_foundRecipes() {
         RandomRecipeResults randomRecipeResultsSpy = spy(RandomRecipeResults.class);
         List<RecipeInformation> recipeList = Collections.singletonList(new RecipeInformation());
         randomRecipeResultsSpy.setRecipes(recipeList);
@@ -148,7 +148,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void getRandomRecipes_RecipesNotFound() {
+    public void getRandomRecipes_recipesNotFound() {
         RandomRecipeResults randomRecipeResultsSpy = spy(RandomRecipeResults.class);
         List<RecipeInformation> recipeList = new ArrayList<>();
         randomRecipeResultsSpy.setRecipes(recipeList);
@@ -161,7 +161,35 @@ public class RecipeServiceTests {
     }
 
     @Test
-    public void getRecipeSummary_FoundSummary() {
+    public void getRandomRecipes_noTags_foundRecipes() {
+        RandomRecipeResults randomRecipeResultsSpy = spy(RandomRecipeResults.class);
+        List<RecipeInformation> recipeList = Collections.singletonList(new RecipeInformation());
+        randomRecipeResultsSpy.setRecipes(recipeList);
+
+        when(restTemplateMock.getForObject(anyString(), eq(RandomRecipeResults.class))).thenReturn(randomRecipeResultsSpy);
+
+        assertEquals(randomRecipeResultsSpy, recipeServiceMock.getRandomRecipes(true, 1));
+        verify(restTemplateMock, atLeastOnce()).getForObject(anyString(), eq(RandomRecipeResults.class));
+
+    }
+
+    @Test
+    public void getRandomRecipes_noTags_recipesNotFound() {
+        RandomRecipeResults randomRecipeResultsSpy = spy(RandomRecipeResults.class);
+        List<RecipeInformation> recipeList = new ArrayList<>();
+        randomRecipeResultsSpy.setRecipes(recipeList);
+
+        when(restTemplateMock.getForObject(anyString(), eq(RandomRecipeResults.class))).thenReturn(randomRecipeResultsSpy);
+
+        assertNull(recipeServiceMock.getRandomRecipes(true, 1));
+        verify(restTemplateMock, atLeastOnce()).getForObject(anyString(), eq(RandomRecipeResults.class));
+
+    }
+
+
+
+    @Test
+    public void getRecipeSummary_foundSummary() {
         RecipeSummary recipeSummaryMock = mock(RecipeSummary.class);
 
         when(restTemplateMock.getForObject(anyString(), eq(RecipeSummary.class))).thenReturn(recipeSummaryMock);
